@@ -1,0 +1,105 @@
+* {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+#main_text_area, #phases_area, #instruction_area, #instruction_area_big {
+    vertical-align: top;
+    margin-top: 20px;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: #fff;
+    display: inline-block;
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#main_text_area {
+    width: 1220px;
+    height: 650px;
+    overflow-y: scroll;
+    font-size: 1.1em;
+    text-align: justify;
+
+}
+
+.check_hint {
+    font-size: small;
+}
+
+#main_text_area iframe {
+    width: 900px;
+    height: auto;
+    padding: 20px;
+    padding-bottom: 0px;
+    margin-bottom: -10px;
+    margin-top: -20px;
+}
+
+#main_text_area #main_question_panel {
+    width: 250px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#main_question_panel {
+    margin-top: 10px;
+}
+
+.question_box {
+    background-color: #d6aeae;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: small;
+}
+
+a {
+    color: black;
+    font-weight: bold;
+}
+
+.local_questions { 
+    width: 100%;
+    max-width: 100% !important;
+    padding: 5px
+}
+
+
+.local_questions { 
+    background-color: #b1ab74;
+    margin-bottom: 5px;
+    padding-bottom: -5px;
+}
+
+.instructions_next_button {
+    width: 120px;
+    margin-top: 10px;
+}
+
+#instruction_area, #phases_area { 
+    width: 1000px;
+    text-align: left;
+}
+
+#instruction_area_big { 
+    width: 1220px;
+    text-align: left;
+}
+
+#but_next {
+    width: 145px;
+    height: 40px;
+    display: inline-block;
+    margin-top: 22px;
+}
+
+.hi_input_val {
+    margin-left: 150px;
+}
+.hi_input_label {
+    margin-left: 20px;
+    vertical-align: top;
+}
