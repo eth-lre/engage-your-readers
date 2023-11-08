@@ -2,7 +2,10 @@
     font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
-#main_text_area, #phases_area, #instruction_area, #instruction_area_big {
+#main_text_area,
+#phases_area,
+#instruction_area,
+#instruction_area_big {
     vertical-align: top;
     margin-top: 20px;
     border: 2px solid black;
@@ -61,30 +64,44 @@ a {
     font-weight: bold;
 }
 
-.local_questions { 
+.local_questions {
     width: 100%;
     max-width: 100% !important;
     padding: 5px
 }
 
 
-.local_questions { 
+.local_questions {
     background-color: #b1ab74;
     margin-bottom: 5px;
     padding-bottom: -5px;
 }
 
-.instructions_next_button {
-    width: 120px;
-    margin-top: 10px;
-}
-
-#instruction_area, #phases_area { 
+#instruction_area,
+#phases_area {
     width: 1000px;
     text-align: left;
 }
 
-#instruction_area_big { 
+textarea.performance_question_value {
+    width: 900px;
+    height: 100px;
+    resize: none;
+    overflow-y: scroll;
+}
+
+
+input[type="range"].performance_question_value {
+    margin-bottom: -5px;
+}
+
+.performance_question_likert_parent {
+    padding-top: 5px;
+    width: 900px;
+    text-align: center;
+}
+
+#instruction_area_big {
     width: 1220px;
     text-align: left;
 }
@@ -93,13 +110,42 @@ a {
     width: 145px;
     height: 40px;
     display: inline-block;
-    margin-top: 22px;
 }
 
 .hi_input_val {
     margin-left: 150px;
 }
+
 .hi_input_label {
     margin-left: 20px;
     vertical-align: top;
+}
+
+body {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #fff3fd;
+}
+
+input[type="button"] {
+  background-color: #d7dadd;
+  border: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: #24292E;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 20px;
+  padding: 6px 16px;
+  vertical-align: middle;
+}
+
+input[type="button"]:hover {
+  background-color: #c9cacc;
+}
+
+input[type="button"]:active {
+  background-color: #d9dbdf;
 }

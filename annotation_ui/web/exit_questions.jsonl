@@ -1,0 +1,4 @@
+{"id": "what_else", "type": "text", "question": "Which question do you find most helpful/distracting for your reading experience? Why?"}
+{"id": "what_didnt_work", "type": "text", "question": "What types of questions do you believe are the most and least helpful for your reading experience?"}
+{"id": "what_prefer", "type": "text", "question": "Where do you prefer the questions to appear?"}
+{"id": "satisfied", "type": "likert", "question": "How much were you satisfied with the current setup?"}

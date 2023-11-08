@@ -14,7 +14,6 @@ export async function load_data(): Promise<any> {
     )
     result = result.trimEnd()
     result = "[" + result.replaceAll("\n", ",") + "]"
-    console.log(result)
     result = JSON.parse(result)
     return result
 }

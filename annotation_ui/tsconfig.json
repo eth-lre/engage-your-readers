@@ -10,5 +10,5 @@
         "esModuleInterop": true, 
         "moduleResolution": "node" 
     },
-    "include": ["src/**/*", "src/*"],
+    "include": ["src/**/*", "src/*", "tsconfig.json"],
 } 

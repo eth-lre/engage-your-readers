@@ -3,7 +3,7 @@ import { DEVMODE } from "./globals";
 import { getIndicies } from "./utils";
 
 let main_text_area = $("#main_text_area")
-
+let progress_screens = 0;
 
 function check_unlocks() {
     let unlock_next = Object.keys(globalThis.responses).every((k, index, array) =>{
@@ -37,6 +37,58 @@ function setup_main_text() {
             )
         });
     }, 1 );
+
+
+    $("#but_next").on("click", () => {
+        console.log("clicking")
+        progress_screens += 1;
+        switch(progress_screens) {
+            case 1: setup_performance_questions(); break;
+            case 2: setup_exit_questions(); break;
+            case 3: load_thankyou(); $("#phases_area").remove(); break;
+        }
+    })
+}
+
+async function setup_performance_questions() {
+    $("#instruction_area").html("Please answer the following questions")
+    main_text_area.html("Performance questions")
+}
+
+async function setup_exit_questions() {
+    main_text_area.html("")
+
+    let result = await $.ajax(
+        "exit_questions.jsonl",
+        {
+            type: 'GET',
+            contentType: 'application/text',
+        }
+    )
+    result = result.trimEnd()
+    result = "[" + result.replaceAll("\n", ",") + "]"
+    result = JSON.parse(result)
+
+    result.forEach( (element) => {
+        main_text_area.append(`
+            <div class="performance_question_text">${element["question"]}</div>
+            
+        `)
+        if (element["type"] == "text") {
+            main_text_area.append(`
+                <textarea class='performance_question_value' placeholder='Please provide a detailed answer'></textarea>
+            `)
+        } else if (element["type"] == "likert") {
+            main_text_area.append(`
+                <div class='performance_question_likert_parent'>
+                    Disagree
+                    <input class='performance_question_value' type="range" min="1" max="5">
+                    Agree
+                </div>
+            `)
+        }
+        main_text_area.append("<br><br>")
+    })
 }
 
 function load_cur_text() {
