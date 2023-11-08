@@ -69,21 +69,43 @@ async function setup_exit_questions() {
     result = "[" + result.replaceAll("\n", ",") + "]"
     result = JSON.parse(result)
 
-    result.forEach( (element) => {
+    result.forEach( (question_data) => {
         main_text_area.append(`
-            <div class="performance_question_text">${element["question"]}</div>
+            <div class="performance_question_text">${question_data["question"]}</div>
             
         `)
-        if (element["type"] == "text") {
+        if (question_data["type"] == "text") {
+            // add checkboxes if exists
+            if (question_data["checkboxes"].length != 0) {
+                main_text_area.append(`<br>`)
+            }
+            question_data["checkboxes"].forEach((checkbox, checkbox_i) => {
+                main_text_area.append(`
+                <input type="checkbox" id="q_${question_data["id"]}_${checkbox_i}" name="q_${question_data["id"]}_${checkbox_i}" value="${checkbox}">
+                <label for="q_${question_data["id"]}_${checkbox_i}">${checkbox}</label>
+                `)
+            })
+            if (question_data["checkboxes"].length != 0) {
+                main_text_area.append(`<br>`)
+            }
+
             main_text_area.append(`
                 <textarea class='performance_question_value' placeholder='Please provide a detailed answer'></textarea>
             `)
-        } else if (element["type"] == "likert") {
+        } else if (question_data["type"] == "likert") {
             main_text_area.append(`
                 <div class='performance_question_likert_parent'>
-                    Disagree
-                    <input class='performance_question_value' type="range" min="1" max="5">
-                    Agree
+                    <div class="performance_question_likert_labels">1 2 3 4 5 6 7</div>
+            
+                    <span class="performance_question_likert_label" style="text-align: right">${question_data["labels"][0]}</span>
+                    <input type="radio" name="likert_${question_data["id"]}" value="1" />            
+                    <input type="radio" name="likert_${question_data["id"]}" value="2" />
+                    <input type="radio" name="likert_${question_data["id"]}" value="3" />
+                    <input type="radio" name="likert_${question_data["id"]}" value="4" />
+                    <input type="radio" name="likert_${question_data["id"]}" value="5" />
+                    <input type="radio" name="likert_${question_data["id"]}" value="6" />
+                    <input type="radio" name="likert_${question_data["id"]}" value="7" />
+                    <span class="performance_question_likert_label" style="text-align: left">${question_data["labels"][1]}</span>
                 </div>
             `)
         }

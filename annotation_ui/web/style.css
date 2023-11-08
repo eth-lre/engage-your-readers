@@ -85,7 +85,7 @@ a {
 
 textarea.performance_question_value {
     width: 900px;
-    height: 100px;
+    height: 80px;
     resize: none;
     overflow-y: scroll;
 }
@@ -99,6 +99,15 @@ input[type="range"].performance_question_value {
     padding-top: 5px;
     width: 900px;
     text-align: center;
+}
+
+.performance_question_likert_label {
+    display: inline-block;
+    width: 100px;
+}
+
+.performance_question_likert_labels {
+    word-spacing: 12px;
 }
 
 #instruction_area_big {
