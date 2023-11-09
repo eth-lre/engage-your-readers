@@ -27,7 +27,7 @@ export async function log_data(data): Promise<any> {
         SERVER_LOG_ROOT + "log",
         {
             data: JSON.stringify({
-                project: "textbook-enrichment",
+                project: "reading-comprehension-help",
                 uid: globalThis.uid,
                 prolific_pid: globalThis.prolific_pid,
                 payload: JSON.stringify(data),

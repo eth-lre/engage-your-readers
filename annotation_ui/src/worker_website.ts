@@ -1,12 +1,12 @@
 import { log_data } from "./connector";
 import { DEVMODE } from "./globals";
-import { getIndicies } from "./utils";
+import { timer } from "./utils";
 
 let main_text_area = $("#main_text_area")
 let progress_screens = 0;
 
 function check_unlocks() {
-    let unlock_next = Object.keys(globalThis.responses).every((k, index, array) =>{
+    let unlock_next = Object.keys(globalThis.responses).every((k, index, array) => {
         return Object.keys(globalThis.responses[k]).length >= 6
     })
     if (unlock_next) {
@@ -14,7 +14,7 @@ function check_unlocks() {
     }
 }
 
-function setup_main_text() {
+async function setup_main_text() {
     let frame_obj = $('<iframe frameborder="0" scrolling="no" onload="resizeIframe(this)">')
     let question_obj = $('<div id="main_question_panel"></div>')
     main_text_area.html("")
@@ -22,27 +22,26 @@ function setup_main_text() {
     main_text_area.append(question_obj)
 
     // hack for JS event loop
-    setTimeout(() => {
-        frame_obj.contents().find('html').html(globalThis.data_now["article"]);
+    await timer(1)
+    frame_obj.contents().find('html').html(globalThis.data_now["article"]);
 
-        let current_offset = 0;
-        globalThis.data_now["questions_intext"].forEach(element => {
-            current_offset = element["pos"]-current_offset;
-            question_obj.append(`
-                <div class="question_box" style="margin-top: ${current_offset}px">
-                    ${element["question"]}
-                    <br>
-                    <input type="text">
-                </div>`
-            )
-        });
-    }, 1 );
+    let current_offset = 0;
+    globalThis.data_now["questions_intext"].forEach(element => {
+        current_offset = element["pos"] - current_offset;
+        question_obj.append(`
+            <div class="question_box" style="margin-top: ${current_offset}px">
+                ${element["question"]}
+                <br>
+                <input type="text">
+            </div>`
+        )
+    })
 
 
     $("#but_next").on("click", () => {
         console.log("clicking")
         progress_screens += 1;
-        switch(progress_screens) {
+        switch (progress_screens) {
             case 1: setup_performance_questions(); break;
             case 2: setup_exit_questions(); break;
             case 3: load_thankyou(); $("#phases_area").remove(); break;
@@ -69,7 +68,7 @@ async function setup_exit_questions() {
     result = "[" + result.replaceAll("\n", ",") + "]"
     result = JSON.parse(result)
 
-    result.forEach( (question_data) => {
+    result.forEach((question_data) => {
         main_text_area.append(`
             <div class="performance_question_text">${question_data["question"]}</div>
             
