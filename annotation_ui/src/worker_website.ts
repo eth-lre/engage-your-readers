@@ -15,27 +15,37 @@ function check_unlocks() {
 }
 
 async function setup_main_text() {
-    let frame_obj = $('<iframe frameborder="0" scrolling="no" onload="resizeIframe(this)">')
+    let frame_obj = $(`<div id="article_frame">${globalThis.data_now["article"]}</div>`)
     let question_obj = $('<div id="main_question_panel"></div>')
     main_text_area.html("")
     main_text_area.append(frame_obj)
     main_text_area.append(question_obj)
-
+    main_text_area.scrollTop(0)
+    
     // hack for JS event loop
-    await timer(1)
-    frame_obj.contents().find('html').html(globalThis.data_now["article"]);
+    await timer(10)
+    await timer(100)
+    // frame_obj.contents().find('html').html(globalThis.data_now["article"]);
 
-    let current_offset = 0;
-    globalThis.data_now["questions_intext"].forEach(element => {
-        current_offset = element["pos"] - current_offset;
+    let offset_x_main = main_text_area.position().left
+    let offset_y_main = main_text_area.position().top
+
+    let current_offset_y = 0;
+    globalThis.data_now["questions_intext"].forEach((element, element_i) => {
+        let offset_x = $(`#question_${element_i}`).position().left
+        let offset_y = $(`#question_${element_i}`).position().top
+        console.log(offset_x-50)
+        
         question_obj.append(`
-            <div class="question_box" style="margin-top: ${current_offset}px">
+            <hr class="arrow" style="width: 1px; position: absolute; left: ${offset_x}px; top: ${offset_y+8}px;">
+            <hr class="line" style="width: ${1000-offset_x}px; position: absolute; left: ${offset_x}px; top: ${offset_y+10}px;">
+            <div class="question_box" style="position: absolute; top: ${offset_y}px">
                 ${element["question"]}
-                <br>
-                <input type="text">
-            </div>`
-        )
+            </div>
+        `)
     })
+    // <br>
+    // <input type="text">
 
 
     $("#but_next").on("click", () => {
