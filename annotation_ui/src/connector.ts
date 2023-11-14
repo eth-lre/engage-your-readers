@@ -39,3 +39,17 @@ export async function log_data(data): Promise<any> {
     console.log(result)
     return result
 }
+
+export async function get_exit_questions(): Promise<Array<object>> {
+    let result = await $.ajax(
+        "exit_questions.jsonl",
+        {
+            type: 'GET',
+            contentType: 'application/text',
+        }
+    )
+    result = result.trimEnd()
+    result = "[" + result.replaceAll("\n", ",") + "]"
+    result = JSON.parse(result)
+    return result
+}

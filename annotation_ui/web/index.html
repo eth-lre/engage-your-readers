@@ -4,22 +4,15 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <title>Reading Comprehension</title>
-    <link rel="shortcut icon" href="#" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script>
-        function resizeIframe(obj) {
-            obj.style.height = (obj.contentWindow.document.documentElement.scrollHeight+20) + 'px';
-        }
-    </script>
-
-
     <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto&display=swap'>
-    <link rel='stylesheet' type='text/css' href='style.css?r=12'> 
+    <link rel='stylesheet' type='text/css' href='style.css?r=0'> 
 </head>
 
 <body>
@@ -40,7 +33,7 @@
             Make sure that you read all the text in detail according to the instructions.
             The next screen will ask you questions and failure to answer them might lead you to be excluded from the study.
         </span>
-        <input id="but_next" type="button" value="Go to next screen">
+        <input id="but_next" type="button" value="Go to next screen" style="margin-left: 40px;">
     </div>
 
     <script id="nocachescript"></script>
