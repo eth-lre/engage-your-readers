@@ -57,7 +57,9 @@ async function setup_main_text() {
 }
 
 async function setup_performance_questions() {
-    $("#instruction_area").html("Please answer the following questions")
+    $("#instruction_area").html("Please answer the following questions.")
+    $("#progress_area").html("Answer all questions before continuing.")
+    main_text_area.scrollTop(0)
     main_text_area.html("")
 
     let questions = globalThis.data_now["questions_performance"]
@@ -74,6 +76,7 @@ async function setup_performance_questions() {
 }
 
 async function setup_exit_questions() {
+    main_text_area.scrollTop(0)
     main_text_area.html("")
 
     let questions = await get_exit_questions()
@@ -130,9 +133,17 @@ function load_cur_text() {
     setup_main_text()
 }
 
-function load_thankyou() {
-    // TODO: wait for data sync
-    let html_text = `Thank you for participating in our study. `;
+async function load_thankyou() {
+    $("#instruction_area").hide()
+
+    main_text_area.html("Please wait 3s for data synchronization to finish.")
+    await timer(1000)
+    main_text_area.html("Please wait 2s for data synchronization to finish.")
+    await timer(1000)
+    main_text_area.html("Please wait 1s for data synchronization to finish.")
+    await timer(1000)
+
+    let html_text = `Thank you for participating in our study. Please get back to the experiment manager.`;
     if (globalThis.uid.startsWith("prolific_pilot_1")) {
         html_text += `<br>Please click <a href="https://app.prolific.co/submissions/complete?cc=C1FV7L5F">this link</a> to go back to Prolific. `
         html_text += `Alternatively use this code <em>C1FV7L5F</em>.`

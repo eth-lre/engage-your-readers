@@ -28,6 +28,11 @@ function prolific_rewrite_uid(uid) {
 }
 
 async function get_uid_and_data() {
+    // set to "demo" uid if in devmode and uid doesn't exist
+    if (DEVMODE && globalThis.uid == null) {
+        document.location.href = document.location.href += "?uid=demo";
+    }
+
     // repeat until we're able to load the data
     while (globalThis.data == null) {
         if (globalThis.uid == null) {
