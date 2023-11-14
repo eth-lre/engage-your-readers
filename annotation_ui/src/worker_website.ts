@@ -1,6 +1,6 @@
 import { log_data, get_exit_questions } from "./connector";
 import { DEVMODE } from "./globals";
-import { timer } from "./utils";
+import { range, timer } from "./utils";
 
 let main_text_area = $("#main_text_area")
 let progress_screens = 0;
@@ -105,18 +105,15 @@ async function setup_exit_questions() {
                 <textarea class='performance_question_value' placeholder='Please provide a detailed answer'></textarea>
             `)
         } else if (question["type"] == "likert") {
+            let joined_labels = range(1, 7).map((x) => `<label for="likert_${question["id"]}_${x}" value="${x}">${x}</label>`).join("\n")
+            let joined_inputs = range(1, 7).map((x) => `<input type="radio" name="likert_${question["id"]}" id="likert_${question["id"]}_${x}" value="${x}" />`).join("\n")
+
             main_text_area.append(`
                 <div class='performance_question_likert_parent'>
-                    <div class="performance_question_likert_labels">1 2 3 4 5 6 7</div>
+                    <div class="performance_question_likert_labels">${joined_labels}</div>
             
                     <span class="performance_question_likert_label" style="text-align: right">${question["labels"][0]}</span>
-                    <input type="radio" name="likert_${question["id"]}" value="1" />            
-                    <input type="radio" name="likert_${question["id"]}" value="2" />
-                    <input type="radio" name="likert_${question["id"]}" value="3" />
-                    <input type="radio" name="likert_${question["id"]}" value="4" />
-                    <input type="radio" name="likert_${question["id"]}" value="5" />
-                    <input type="radio" name="likert_${question["id"]}" value="6" />
-                    <input type="radio" name="likert_${question["id"]}" value="7" />
+                    ${joined_inputs}
                     <span class="performance_question_likert_label" style="text-align: left">${question["labels"][1]}</span>
                 </div>
             `)
