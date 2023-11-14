@@ -27,10 +27,6 @@
     position: relative;
 }
 
-.check_hint {
-    font-size: small;
-}
-
 #article_frame {
     width: 900px;
     height: auto;
@@ -66,7 +62,7 @@
     padding: 5px;
     margin-bottom: 10px;
     width: 200px;
-    font-size: small;
+    /* font-size: small; */
     text-align: left;
 }
 
@@ -102,7 +98,7 @@ input[type="range"].performance_question_value {
 
 .performance_question_likert_label {
     display: inline-block;
-    width: 100px;
+    width: 200px;
 }
 
 .performance_question_likert_labels {
@@ -132,6 +128,10 @@ input[type="range"].performance_question_value {
 
 .performance_question_likert_labels {
     user-select: none;
+}
+
+.exit_questions_intext {
+    font-size: small;
 }
 
 body {

@@ -93,8 +93,8 @@ async function setup_exit_questions() {
             }
             question["checkboxes"].forEach((checkbox, checkbox_i) => {
                 main_text_area.append(`
-                <input type="checkbox" id="q_${question["id"]}_${checkbox_i}" name="q_${question["id"]}_${checkbox_i}" value="${checkbox}">
-                <label for="q_${question["id"]}_${checkbox_i}">${checkbox}</label>
+                    <input type="checkbox" id="q_${question["id"]}_${checkbox_i}" name="q_${question["id"]}_${checkbox_i}" value="${checkbox}">
+                    <label for="q_${question["id"]}_${checkbox_i}">${checkbox}</label>
                 `)
             })
             if (question["checkboxes"].length != 0) {
@@ -116,6 +116,18 @@ async function setup_exit_questions() {
                     ${joined_inputs}
                     <span class="performance_question_likert_label" style="text-align: left">${question["labels"][1]}</span>
                 </div>
+            `)
+        } else if (question["type"] == "intext_questions") {
+            globalThis.data_now["questions_intext"].forEach((question, question_i) => {
+                main_text_area.append(`
+                    <input type="checkbox" id="q_${question["id"]}_${question_i}" value="${question_i}">
+                    <label class="exit_questions_intext" for="q_${question["id"]}_${question_i}">${question["question"]}</label>
+                    <br>
+                `)
+            })
+            main_text_area.append(`
+                <br>
+                <textarea class='performance_question_value' placeholder='Please provide a detailed answer'></textarea>
             `)
         }
         main_text_area.append("<br><br>")

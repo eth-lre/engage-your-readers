@@ -1,6 +1,7 @@
-{"id": "content", "type": "likert", "question": "How would you rate the content of the questions from your prior reading experience?", "labels": ["Poor", "Good"]}
-{"id": "relevance", "type": "likert", "question": "How would you rate the relevant of the questions from your prior reading experience?", "labels": ["Never relevant", "Always relevant"]}
-{"id": "frequency", "type": "likert", "question": "How would you rate the relevant of the questions from your prior reading experience?", "labels": ["Terrible", "Ideal"]}
-{"id": "which_question", "type": "text", "question": "Which question do you find most helpful/distracting for your reading experience? Why?", "checkboxes": []}
+{"id": "content", "type": "likert", "question": "How would you rate the <b>content</b> of the questions from your prior reading experience?", "labels": ["Poor", "Good"]}
+{"id": "relevance", "type": "likert", "question": "How would you rate the <b>relevance</b> of the questions from your prior reading experience?", "labels": ["Never relevant", "Always relevant"]}
+{"id": "frequency", "type": "likert", "question": "How would you rate the <b>frequency</b> of the questions from your prior reading experience?", "labels": ["Terrible", "Ideal"]}
+{"id": "which_question_helpful", "type": "intext_questions", "question": "Which question do you find most <b>helpful</b> for your reading experience? Why?", "checkboxes": []}
+{"id": "which_question_distracting", "type": "intext_questions", "question": "Which question do you find most <b>distracting</b> for your reading experience? Why?", "checkboxes": []}
 {"id": "which_question_type", "type": "text", "question": "What types of questions do you believe are the most and least helpful for your reading experience?", "checkboxes": ["High-level", "Specifics", "Something else"]}
 {"id": "where_appear", "type": "text", "question": "Where do you prefer the questions to appear?", "checkboxes": ["Before the information is reveales", "After the information is revealed"]}
