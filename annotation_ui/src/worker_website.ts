@@ -21,7 +21,7 @@ async function setup_main_text() {
     main_text_area.append(frame_obj)
     main_text_area.append(question_obj)
     main_text_area.scrollTop(0)
-    
+
     // hack for JS event loop
     await timer(10)
 
@@ -33,11 +33,11 @@ async function setup_main_text() {
 
         let offset_x = question_span.position().left
         let offset_y = question_span.position().top
-        
+
         question_obj.append(`
-            <hr class="arrow" style="width: 0px; height: 8px; position: absolute; left: ${offset_x+1}px; top: ${offset_y-8}px;">
-            <hr class="line" style="width: ${1000-offset_x}px; position: absolute; left: ${offset_x+1}px; top: ${offset_y-10}px;">
-            <div class="question_box" style="position: absolute; top: ${offset_y-3}px">
+            <hr class="arrow" style="width: 0px; height: 8px; position: absolute; left: ${offset_x + 1}px; top: ${offset_y - 8}px;">
+            <hr class="line" style="width: ${1000 - offset_x}px; position: absolute; left: ${offset_x + 1}px; top: ${offset_y - 10}px;">
+            <div class="question_box" style="position: absolute; top: ${offset_y - 3}px">
                 ${element["question"]}
             </div>
         `)
@@ -54,10 +54,26 @@ async function setup_main_text() {
             case 3: load_thankyou(); $("#phases_area").remove(); break;
         }
     })
+
+    var minutes = 20
+    var stopwatchTimer = setInterval(() => {
+        minutes -= 1
+        if (minutes < 0) {
+            minutes = 0
+            clearInterval(stopwatchTimer);
+        }
+        $("#stopwatch").text(`${minutes}`)
+    }, 1000 * 60);
 }
 
 async function setup_performance_questions() {
-    $("#instruction_area").html("Please answer the following questions.")
+    $("#instruction_area").html(`
+        <ul>
+            <li>Please answer the following questions.</li>
+            <li>You are not allowed to go back or use an external tools.</li>
+            <li>Base your answers solely on what you just learned and not personal experience.</li>
+        </ul>
+    `)
     $("#progress_area").html("Answer all questions before continuing.")
     main_text_area.scrollTop(0)
     main_text_area.html("")
@@ -76,6 +92,14 @@ async function setup_performance_questions() {
 }
 
 async function setup_exit_questions() {
+    $("#instruction_area").html(`
+        <ul>
+            <li>Please answer the following questions dutifully.</li>
+            <li>Make sure that you deliberate before answering each of them and take your time.</li>
+            <li>The more detailed and elaborate answer you provide, the better.</li>
+        </ul>
+    `)
+
     main_text_area.scrollTop(0)
     main_text_area.html("")
 
