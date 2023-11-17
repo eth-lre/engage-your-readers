@@ -36,13 +36,12 @@ export async function log_data(data): Promise<any> {
             contentType: 'application/json',
         }
     )
-    console.log(result)
     return result
 }
 
-export async function get_exit_questions(): Promise<Array<object>> {
+export async function get_json(name: string): Promise<Array<object>> {
     let result = await $.ajax(
-        "exit_questions.jsonl",
+        name,
         {
             type: 'GET',
             contentType: 'application/text',
@@ -52,4 +51,14 @@ export async function get_exit_questions(): Promise<Array<object>> {
     result = "[" + result.replaceAll("\n", ",") + "]"
     result = JSON.parse(result)
     return result
+}
+
+export async function get_html(name: string): Promise<string> {
+    return await $.ajax(
+        name,
+        {
+            type: 'GET',
+            contentType: 'text/html',
+        }
+    )
 }

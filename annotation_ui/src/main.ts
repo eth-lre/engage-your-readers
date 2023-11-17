@@ -1,16 +1,16 @@
 import { DEVMODE } from "./globals"
 export var UID: string
 import { load_data } from './connector'
-import { load_cur_text } from "./worker_website"
+import { setup_progression } from "./worker_website"
 import { range } from "./utils";
 
-globalThis.phase = -1;
+globalThis.phase = 0;
 globalThis.data = null
 
 const urlParams = new URLSearchParams(window.location.search);
 globalThis.uid = urlParams.get('uid');
 // take data_i from GET if available else use 0 as default
-globalThis.data_i = parseInt(urlParams.get("data_i"))-1 || 0;
+globalThis.data_i = parseInt(urlParams.get("data_i")) - 1 || 0;
 
 function prolific_rewrite_uid(uid) {
     if (uid != "prolific_pilot_1") {
@@ -46,20 +46,13 @@ async function get_uid_and_data() {
         let old_uid = globalThis.uid
         globalThis.uid = prolific_rewrite_uid(globalThis.uid);
         if (old_uid != globalThis.uid) {
-            document.location.href = document.location.href.replace("?uid="+old_uid, "?uid="+globalThis.uid);
+            document.location.href = document.location.href.replace("?uid=" + old_uid, "?uid=" + globalThis.uid);
         }
-
 
         await load_data().then((data: any) => {
             globalThis.data = data
             globalThis.data_now = globalThis.data[globalThis.data_i];
-            load_cur_text()
-            
-            if (globalThis.prolific_pid == undefined) {
-                $("#read_instructions").attr("href", `instructions_1.html?uid=${globalThis.uid}`)
-            } else {
-                $("#read_instructions").attr("href", `instructions_1.html?uid=${globalThis.uid}?prolific_pid=${globalThis.prolific_pid}`)
-            }
+            setup_progression()
         }).catch((reason: any) => {
             console.error(reason)
             alert("Invalid UID " + globalThis.uid);

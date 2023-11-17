@@ -12,18 +12,15 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto&display=swap'>
-    <link rel='stylesheet' type='text/css' href='style.css?r=0'> 
+    <link rel='stylesheet' type='text/css' href='style.css?r=1'> 
 </head>
 
 <body>
-    <div style="margin-left: auto; margin-right: auto; font-size: x-large;">Reading Comprehension</div>
-
-    <div id="instruction_area">
-        <ul>
-            <li>You have <b><span id="stopwatch">20</span> minutes</b> left.</li>
-            <li>Make sure to read and comprehend displayed questions before continuing reading.</li>
-        </ul>
+    <div style="margin-left: auto; margin-right: auto; font-size: x-large; position: absolute; z-index: -100; text-align: left;">
+        Reading<br>Comprehension
     </div>
+
+    <div id="instruction_area_top"></div>
 
     <br>
 
@@ -31,8 +28,8 @@
 
     <br>
 
-    <div id="phases_area">
-        <span id="progress_area" style="width: 800px; display: inline-block;">
+    <div id="instruction_area_bot">
+        <span id="instruction_text_bot" style="width: 800px; display: inline-block;">
             Make sure that you read all the text in detail according to the instructions.
             The next screen will ask you questions and failure to answer them might lead you to be excluded from the study.
         </span>
