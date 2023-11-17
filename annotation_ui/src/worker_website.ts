@@ -49,6 +49,12 @@ async function setup_intro_information() {
 }
 
 async function setup_main_text(rate_questions: boolean) {
+    if (rate_questions) {
+        instruction_text_bot.html("Finish reading before continuing.")
+    } else {
+        instruction_text_bot.html("Please answer all questions before continuing.")
+    }
+    
     // set instructions
     instruction_area_top.show()
     if (rate_questions) {
