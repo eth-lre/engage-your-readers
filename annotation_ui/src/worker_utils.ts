@@ -29,7 +29,7 @@ export function instantiate_question(question: object) {
         output += `<input type="number" min="15" max="100">`
     } else if (question["type"] == "choices") {
         let options = question["choices"].map((choice) => `<option value="${choice}">${choice}</option>`)
-        output += `<select>\n${options.join("\n")}\n</select>`
+        output += `<select>\n<option value="blank"></option>\n${options.join("\n")}\n</select>`
     } else if (question["type"] == "likert") {
         let joined_labels = range(1, 7).map((x) => `<label for="likert_${question["id"]}_${x}" value="${x}">${x}</label>`).join("\n")
         let joined_inputs = range(1, 7).map((x) => `<input type="radio" name="likert_${question["id"]}" id="likert_${question["id"]}_${x}" value="${x}" />`).join("\n")

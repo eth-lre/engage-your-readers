@@ -2,3 +2,5 @@
 {"id": "relevance", "type": "likert", "question": "How would you rate the <b>relevance</b> of the questions from your prior reading experience?", "labels": ["Never relevant", "Always relevant"]}
 {"id": "frequency", "type": "likert", "question": "How would you rate the <b>frequency</b> of the questions from your prior reading experience?", "labels": ["Terrible", "Ideal"]}
 {"id": "where_appear", "type": "text", "question": "Where do you prefer the questions to appear?", "checkboxes": ["Before the information is reveales", "After the information is revealed"]}
+{"id": "english_proficiency", "type": "choices", "question": "What is your English proficiency?", "choices": ["A1: rudimentary communication", "A2: limited phrases", "B1: discussion on familiar topics", "B2: discussion on any topic", "C1: fluent", "C2: near-native"]}
+{"id": "read_often", "type": "choices", "question": "How many pages of text do you read per day?", "choices": ["0-5", "6-15", "16-30", ">30"]}

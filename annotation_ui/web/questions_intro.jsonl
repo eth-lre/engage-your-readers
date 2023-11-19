@@ -1,4 +1,3 @@
 {"id": "age", "type": "number", "question": "What is your age?"}
 {"id": "education", "type": "choices", "question": "What is your finished education level?", "choices": ["High-school", "Bachelor", "Master", "PhD"]}
-{"id": "gender", "type": "text_small", "question": "What is your gender?"}
-{"id": "english_proficiency", "type": "choices", "question": "What is your English proficiency?", "choices": ["A1", "A2", "B1", "B2", "C1", "C2"]}
+{"id": "gender", "type": "choices", "question": "What is your gender?", "choices": ["Male", "Female", "Other", "Prefer not to answer"]}

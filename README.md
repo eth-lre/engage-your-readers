@@ -9,7 +9,7 @@ WIP project at ETH Zürich: Peng Cui, Xiaoyu Zhang, Vilém Zouhar, Mrinmaya Sach
 Screen pipeline:
 1. Demographic questions
 2. Intructions
-3. Readingh task
+3. Reading task
 4. Performance questions
 5. Project questions
 6. Reading interface (again) with question annotation

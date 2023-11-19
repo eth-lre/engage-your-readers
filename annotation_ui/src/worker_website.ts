@@ -13,11 +13,12 @@ export function setup_progression() {
         switch (globalThis.phase) {
             case 0: setup_intro_demographics(); break;
             case 1: setup_intro_information(); break;
-            case 2: setup_main_text(false); break;
+            case 2: setup_main_text(null); break;
             case 3: setup_performance_questions(); break;
             case 4: setup_exit_questions(); break;
-            case 5: setup_main_text(true); break;
-            case 6: load_thankyou(); break;
+            case 5: setup_main_text("Helpful?"); break;
+            case 6: setup_main_text("Distracting?"); break;
+            case 7: load_thankyou(); break;
         }
     }
     $("#but_next").on("click", () => {
@@ -35,7 +36,7 @@ async function setup_intro_demographics() {
 
     main_text_area.scrollTop(0)
     main_text_area.html("")
-    
+
     let questions = await get_json("questions_intro.jsonl")
 
     questions.forEach((question) => {
@@ -48,13 +49,13 @@ async function setup_intro_information() {
     main_text_area.html(await get_html("instructions_2.html"))
 }
 
-async function setup_main_text(rate_questions: boolean) {
+async function setup_main_text(rate_questions: string | null) {
     if (rate_questions) {
         instruction_text_bot.html("Finish reading before continuing.")
     } else {
         instruction_text_bot.html("Please answer all questions before continuing.")
     }
-    
+
     // set instructions
     instruction_area_top.show()
     if (rate_questions) {
@@ -85,7 +86,10 @@ async function setup_main_text(rate_questions: boolean) {
 
     let article = globalThis.data_now["article"]
     // add "finished" button
-    article = article.split("</p>").join(`  <input class="paragraph_finished_button" type='button' value="Finished"></p>`)
+    if (!rate_questions) {
+        article = article.split("</p>").join(`  <input class="paragraph_finished_button" type='button' value="Finished"></p>`)
+    }
+
     let frame_obj = $(`<div id="article_frame">${article}</div>`)
     let question_obj = $('<div id="main_question_panel"></div>')
     main_text_area.html("")
@@ -97,7 +101,7 @@ async function setup_main_text(rate_questions: boolean) {
     await timer(10)
 
     $(".paragraph_finished_button").each((_, element) => {
-        $(element).on("click", () => {element.remove()})
+        $(element).on("click", () => { element.remove() })
     })
 
     globalThis.data_now["questions_intext"].forEach(async (element, element_i) => {
@@ -113,8 +117,11 @@ async function setup_main_text(rate_questions: boolean) {
         if (rate_questions) {
             question_rate_section = `
                 <div class="question_rate_section">
-                    Helpful? <input type="checkbox">
-                    Distracting? <input type="checkbox">
+                    ${rate_questions}&nbsp;&nbsp;
+                    <label for="rate_questions_${element_i}_no">No</label>
+                    <input name="rate_questions_${element_i}" type="radio" id="rate_questions_${element_i}_no">
+                    <input name="rate_questions_${element_i}" type="radio" id="rate_questions_${element_i}_yes">
+                    <label for="rate_questions_${element_i}_yes">Yes</label>
                 </div>
             `
         }
