@@ -59,6 +59,8 @@ async function get_uid_and_data() {
             globalThis.uid = null;
         });
     }
+
+    globalThis.user_control = globalThis.data_now["user_group"] == "control"
 }
 
 get_uid_and_data()

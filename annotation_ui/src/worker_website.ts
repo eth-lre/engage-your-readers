@@ -16,7 +16,15 @@ export function setup_progression() {
             case 2: setup_main_text(null); break;
             case 3: setup_performance_questions(); break;
             case 4: setup_exit_questions(); break;
-            case 5: setup_main_text("Helpful?"); break;
+            case 5: 
+                if(globalThis.user_control) {
+                    // skip to the next one
+                    globalThis.phase = 7;
+                    drive_setup()
+                    return
+                }
+                setup_main_text("Helpful?");
+                break;
             case 6: setup_main_text("Distracting?"); break;
             case 7: load_thankyou(); break;
         }
@@ -105,7 +113,7 @@ async function setup_main_text(rate_questions: string | null) {
         if (element_i != paragraph_offsets.length - 1) {
             frame_obj.append(`<div
                 class="paragraph_blurbox" id="paragraph_blurbox_${element_i}"
-                style="height: ${paragraph_offsets[element_i + 1] - paragraph_offsets[element_i]}px; top: ${paragraph_offsets[element_i] + 24}px"
+                style="height: ${paragraph_offsets[element_i + 1] - paragraph_offsets[element_i]}px; top: ${paragraph_offsets[element_i] + 30}px"
             ></div>`)
         }
         $(element).on("click", () => {
@@ -186,6 +194,10 @@ async function setup_exit_questions() {
     let questions = await get_json("questions_exit.jsonl")
 
     questions.forEach((question) => {
+        // skip this question
+        if(globalThis.user_control && !question["also_control"]) {
+            return
+        }
         main_text_area.append(`${instantiate_question(question)}<br><br>`)
     })
 }
