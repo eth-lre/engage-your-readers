@@ -1,3 +1,4 @@
+{"id": "satisfaction", "type": "likert", "question": "Do you prefer having the enhanced reading questions in the text over not having them?", "labels": ["Prefer not having", "Prefer having"]}
 {"id": "content", "type": "likert", "question": "How would you rate the <b>content</b> of the questions from your prior reading experience?", "labels": ["Poor", "Good"]}
 {"id": "relevance", "type": "likert", "question": "How would you rate the <b>relevance</b> of the questions from your prior reading experience?", "labels": ["Never relevant", "Always relevant"]}
 {"id": "frequency", "type": "likert", "question": "How would you rate the <b>frequency</b> of the questions from your prior reading experience?", "labels": ["Terrible", "Ideal"]}

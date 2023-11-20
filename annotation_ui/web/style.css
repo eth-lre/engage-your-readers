@@ -36,6 +36,17 @@
     display: inline-block;
 }
 
+.paragraph_blurbox {
+    /* 100% actually spans the whole main text area */
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    backdrop-filter: blur(5px);
+    /* make sure it's in foreground */
+    z-index: 200;
+    position: absolute;
+    box-shadow: 20px 20px white;
+}
+
 #main_text_area #main_question_panel {
     width: 180px;
     height: 100%;

@@ -31,8 +31,8 @@ export function setup_progression() {
 
 
 async function setup_intro_demographics() {
-    instruction_area_top.hide()
-    instruction_text_bot.html("By continuing you agree with the collection and publication of your data for scientific purposes.")
+    instruction_area_top.text("Please fill in the following personal information.")
+    instruction_text_bot.text("By continuing you agree with the collection and publication of your data for scientific purposes.")
 
     main_text_area.scrollTop(0)
     main_text_area.html("")
@@ -100,8 +100,18 @@ async function setup_main_text(rate_questions: string | null) {
     // hack for JS event loop
     await timer(10)
 
-    $(".paragraph_finished_button").each((_, element) => {
-        $(element).on("click", () => { element.remove() })
+    let paragraph_offsets = $(".paragraph_finished_button").map((_, element) => $(element).position().top).toArray()
+    $(".paragraph_finished_button").each((element_i, element) => {
+        if (element_i != paragraph_offsets.length - 1) {
+            frame_obj.append(`<div
+                class="paragraph_blurbox" id="paragraph_blurbox_${element_i}"
+                style="height: ${paragraph_offsets[element_i + 1] - paragraph_offsets[element_i]}px; top: ${paragraph_offsets[element_i] + 24}px"
+            ></div>`)
+        }
+        $(element).on("click", () => {
+            element.remove()
+            $(`#paragraph_blurbox_${element_i}`).remove()
+        })
     })
 
     globalThis.data_now["questions_intext"].forEach(async (element, element_i) => {
