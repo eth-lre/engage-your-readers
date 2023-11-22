@@ -1,3 +1,7 @@
-{"id": "age", "type": "number", "question": "What is your age?"}
-{"id": "education", "type": "choices", "question": "What is your finished education level?", "choices": ["High-school", "Bachelor", "Master", "PhD"]}
-{"id": "gender", "type": "choices", "question": "What is your gender?", "choices": ["Male", "Female", "Other", "Prefer not to answer"]}
+{"id": "age", "type": "choices", "question": "Please select your age range:", "choices": ["16-20", "21-25", "26-30", "31-35", "36 and over", "I prefer not to reveal"]}
+{"id": "gender", "type": "text", "question": "Please enter your gender?", "choices": ["Male", "Female", "Other", "Prefer not to answer"]}
+{"id": "education", "type": "choices", "question": "What is the highest degree you have achieved??", "choices": ["High-school", "Bachelor", "Master", "PhD", "I prefer not to reveal"]}
+{"id": "english_speaker", "type": "choices", "question": "Do you consider yourself as a native English speaker?", "choices": ["Yes", "No", "I prefer not to reveal"]}
+{"id": "english_proficiency", "type": "choices", "question": "How would you rate your English proficiency?", "choices": ["A1: rudimentary communication", "A2: limited phrases", "B1: discussion on familiar topics", "B2: discussion on any topic", "C1: fluent", "C2: native/near-native"]}
+{"id": "read_often", "type": "choices", "question": "How many pages of text do you regularly read per day?", "choices": ["0-5", "6-15", "16-30", ">30"]}
+

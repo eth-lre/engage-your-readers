@@ -1,7 +1,19 @@
 {"also_control": false, "id": "satisfaction", "type": "likert", "question": "Do you prefer having the enhanced reading questions in the text over not having them?", "labels": ["Prefer not having", "Prefer having"]}
-{"also_control": false, "id": "content", "type": "likert", "question": "How would you rate the <b>content</b> of the questions from your prior reading experience?", "labels": ["Poor", "Good"]}
-{"also_control": false, "id": "relevance", "type": "likert", "question": "How would you rate the <b>relevance</b> of the questions from your prior reading experience?", "labels": ["Never relevant", "Always relevant"]}
-{"also_control": false, "id": "frequency", "type": "likert", "question": "How would you rate the <b>frequency</b> of the questions from your prior reading experience?", "labels": ["Terrible", "Ideal"]}
-{"also_control": false, "id": "where_appear", "type": "text", "question": "Where do you prefer the questions to appear?", "checkboxes": ["Before the information is reveales", "After the information is revealed"]}
-{"also_control": true, "id": "english_proficiency", "type": "choices", "question": "What is your English proficiency?", "choices": ["A1: rudimentary communication", "A2: limited phrases", "B1: discussion on familiar topics", "B2: discussion on any topic", "C1: fluent", "C2: near-native"]}
-{"also_control": true, "id": "read_often", "type": "choices", "question": "How many pages of text do you read per day?", "choices": ["0-5", "6-15", "16-30", ">30"]}
+{"also_control": false, "id": "content", "type": "likert", "question": "How would you rate the <b>content</b> of the questions you have just read?", "labels": ["Very bad", "Very good"]}
+{"also_control": false, "id": "relevance", "type": "likert", "question": "How would you rate the <b>relevance</b> of the questions you have just read?", "labels": ["Very bad", "Very good"]}
+{"also_control": false, "id": "frequency", "type": "likert", "question": "How would you rate the <b>frequency</b> of the questions you have just read?", "labels": ["Very bad", "Very good"]}
+{"also_control": false, "id": "type", "type": "text", "question": "Which type of questions do you think is the most help for your reading task?", "checkboxes": ["Yes–no Questions e.g. Is sole proprietorship a form business organization in the US?", "Alternative Question e.g. What are the best business organization form, sole propretorship, partnership, or corporation?", "Open question with an answer in the article", "Open question without an answer in the article", "Others (please specify)"]}
+{"also_control": false, "id": "where_appear", "type": "text", "question": "In which location would you prefer the questions to appear?", "checkboxes": [
+    "Right before the information",
+    "Within the information (middle)",
+    "Right after the information",
+    "At the beginning of the <b>paragraph</b> where the information resides",
+    "At the end of the <b>paragraph</b> where the information resides",
+    "At the end of the preceding <b>paragraph</b> where the information resides",
+    "At the beginning of the <b>chapter</b> where the information resides",
+    "At the end of the <b>chapter</b> where the information resides",
+    "At the end of the preceding <b>chapter</b> where the information resides",
+    "Other (please specify)"
+]}
+
+
