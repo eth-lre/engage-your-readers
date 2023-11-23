@@ -120,6 +120,29 @@ input[type="range"].performance_question_value {
     word-spacing: 12px;
 }
 
+
+.question_question_likert_parent input[type="radio"] {
+    margin-left: -1px;
+    margin-right: -1px;
+}
+
+.question_question_likert_parent {
+    padding-top: 5px;
+    width: 100%;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+}
+
+.question_question_likert_label {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.question_question_likert_labels {
+    word-spacing: 4px;
+}
+
 #instruction_area_big {
     width: 1220px;
     text-align: left;
@@ -143,11 +166,6 @@ input[type="range"].performance_question_value {
 
 .performance_question_likert_labels {
     user-select: none;
-}
-
-.question_rate_section {
-    font-size: small;
-    font-weight: bold;
 }
 
 body {

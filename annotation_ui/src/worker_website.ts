@@ -19,14 +19,15 @@ export function setup_progression() {
             case 5: 
                 if(globalThis.user_control) {
                     // skip to the next one
-                    globalThis.phase = 7;
+                    globalThis.phase = 8;
                     drive_setup()
                     return
                 }
-                setup_main_text("Helpful?");
+                setup_main_text(["Not helpful", "Helpful"]);
                 break;
-            case 6: setup_main_text("Distracting?"); break;
-            case 7: load_thankyou(); break;
+            case 6: setup_main_text(["Distracting", "Not distracting"]); break;
+            case 7: setup_main_text(["Irrelevant", "Relevant"]); break;
+            case 8: load_thankyou(); break;
         }
     }
     $("#but_next").on("click", () => {
@@ -57,29 +58,30 @@ async function setup_intro_information() {
     main_text_area.html(await get_html("instructions_2.html"))
 }
 
-async function setup_main_text(rate_questions: string | null) {
-    if (rate_questions) {
-        instruction_text_bot.html("Finish reading before continuing.")
-    } else {
-        instruction_text_bot.html("Please answer all questions before continuing.")
-    }
-
+async function setup_main_text(rate_questions: [string, string] | null) {
     // set instructions
     instruction_area_top.show()
     if (rate_questions) {
         instruction_area_top.html(`
             <ul>
-                <li>Please evaluate the properties of each question (right side).</li>
-                <li>TODO more instructions</li>
+                <li>Please evaluate each question (1 - very bad to 5 - very good) shown on the right based on your reading experience.</li>
+                <li>You will be asked if the questions are <b>helpful</b>, <b>distracting</b>, and <b>relevant</b>.</li>
             </ul>
         `)
+        instruction_text_bot.text("")
     } else {
         instruction_area_top.html(`
             <ul>
-                <li>You have <b><span id="stopwatch">20</span> minutes</b> left.</li>
-                <li>Make sure to read and comprehend displayed questions before continuing reading.</li>
+                <li>Please read the assigned article carefully. You have <b><span id="stopwatch">20</span> minutes</b> left.</li>
+                <li>Please <b>click the finished button</b> at the bottom of it to reveal the next paragraph when you finish reading a paragraph.</li>
+                <li>A series of questions is shown next to the article. When you encounter one, please make sure to read and comprehend it before moving on.</li>
+                <li>Think about the questions and keep them in mind as you proceed with reading.</li>
             </ul>
         `)
+        instruction_text_bot.text(`
+            We will next ask you questions about the article without you being allowed to go back.
+        `)
+
         await timer(10)
         var minutes = 20
         var stopwatchTimer = setInterval(() => {
@@ -135,13 +137,19 @@ async function setup_main_text(rate_questions: string | null) {
 
         let question_rate_section = ""
         if (rate_questions) {
+            let joined_labels = range(1, 5).map((x) => `<label for="likert_${element_i}_${x}" value="${x}">${x}</label>`).join("\n")
+            let joined_inputs = range(1, 5).map((x) => `<input type="radio" name="likert_${element_i}" id="likert_${element_i}_${x}" value="${x}" />`).join("\n")
+
             question_rate_section = `
-                <div class="question_rate_section">
-                    ${rate_questions}&nbsp;&nbsp;
-                    <label for="rate_questions_${element_i}_no">No</label>
-                    <input name="rate_questions_${element_i}" type="radio" id="rate_questions_${element_i}_no">
-                    <input name="rate_questions_${element_i}" type="radio" id="rate_questions_${element_i}_yes">
-                    <label for="rate_questions_${element_i}_yes">Yes</label>
+                <div class='question_question_likert_parent'>
+                    <div class="question_question_likert_labels">${joined_labels}</div>
+            
+                    ${joined_inputs}<br>
+
+                    <div style="text-align: left;">
+                        <span class="question_question_likert_label" style="">${rate_questions[0]}</span>
+                        <span class="question_question_likert_label" style="text-align: right; float: right;">${rate_questions[1]}</span>
+                    </div>
                 </div>
             `
         }
@@ -160,12 +168,11 @@ async function setup_main_text(rate_questions: string | null) {
 async function setup_performance_questions() {
     instruction_area_top.html(`
         <ul>
-            <li>Please answer the following questions.</li>
-            <li>You are not allowed to go back or use an external tools.</li>
-            <li>Base your answers solely on what you just learned and not personal experience.</li>
+            <li>Now please answer a few questions about the article.</li>
+            <li>Your answers should be exclusively based on the article's content, without any prior knowledge, or external help, such as search engines.</li>
         </ul>
     `)
-    instruction_text_bot.html("Answer all questions before continuing.")
+    instruction_text_bot.html("Once you go to the next page, you are not allowed to change your answer.")
     main_text_area.scrollTop(0)
     main_text_area.html("")
 
@@ -185,10 +192,10 @@ async function setup_performance_questions() {
 async function setup_exit_questions() {
     instruction_area_top.html(`
         <ul>
-            <li>Please answer the following questions dutifully and with elaboration.</li>
-            <li>Make sure that you deliberate before answering each of them and take your time.</li>
+            <li>Your answers in this part are vital for our research, so please pay particular attention to your answers.</li>
         </ul>
     `)
+    instruction_text_bot.text("")
 
     main_text_area.scrollTop(0)
     main_text_area.html("")
@@ -215,7 +222,7 @@ async function load_thankyou() {
     main_text_area.html("Please wait 1s for data synchronization to finish.")
     await timer(1000)
 
-    let html_text = `Thank you for participating in our study. Please get back to the experiment manager.`;
+    let html_text = `Thank you for participating in our study. For any further questions about this project or your data, <a href="mailto:peng.cui@inf.ethz.ch">send us a message</a>.`;
     if (globalThis.uid.startsWith("prolific_pilot_1")) {
         html_text += `<br>Please click <a href="https://app.prolific.co/submissions/complete?cc=C1FV7L5F">this link</a> to go back to Prolific. `
         html_text += `Alternatively use this code <em>C1FV7L5F</em>.`
