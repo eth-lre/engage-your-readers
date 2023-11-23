@@ -41,8 +41,6 @@
     width: calc(100% - 30px);
     margin-left: -10px;
     backdrop-filter: blur(4px);
-    /* make sure it's in foreground */
-    z-index: 200;
     position: absolute;
 }
 

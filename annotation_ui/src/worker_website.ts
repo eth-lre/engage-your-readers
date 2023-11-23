@@ -111,9 +111,10 @@ async function setup_main_text(rate_questions: string | null) {
     let paragraph_offsets = $(".paragraph_finished_button").map((_, element) => $(element).position().top).toArray()
     $(".paragraph_finished_button").each((element_i, element) => {
         if (element_i != paragraph_offsets.length - 1) {
+            // make height span two paragraphs to cover question boxes
             frame_obj.append(`<div
                 class="paragraph_blurbox" id="paragraph_blurbox_${element_i}"
-                style="height: ${paragraph_offsets[element_i + 1] - paragraph_offsets[element_i]}px; top: ${paragraph_offsets[element_i] + 30}px"
+                style="height: ${paragraph_offsets[element_i + 2] - paragraph_offsets[element_i]}px; top: ${paragraph_offsets[element_i] + 30}px; z-index: ${200-element_i};"
             ></div>`)
         }
         $(element).on("click", () => {
@@ -123,6 +124,7 @@ async function setup_main_text(rate_questions: string | null) {
     })
 
     globalThis.data_now["questions_intext"].forEach(async (element, element_i) => {
+        let paragraph_i = frame_obj.html().split(`id="question_${element_i}"`)[0].split("paragraph_finished_button").length-1
         let question_span = $(`#question_${element_i}`)
         question_span.append("&nbsp;")
         // hack for JS event loop
@@ -147,7 +149,7 @@ async function setup_main_text(rate_questions: string | null) {
         question_obj.append(`
             <hr class="arrow" style="width: 0px; height: 8px; position: absolute; left: ${offset_x + 1}px; top: ${offset_y - 8}px;">
             <hr class="line" style="width: ${1000 - offset_x}px; position: absolute; left: ${offset_x + 1}px; top: ${offset_y - 10}px;">
-            <div class="question_box" style="position: absolute; top: ${offset_y - 3}px">
+            <div class="question_box" style="position: absolute; top: ${offset_y - 3}px; z-index: ${200-paragraph_i}">
                 ${element["question"]}
                 ${question_rate_section}
             </div>
