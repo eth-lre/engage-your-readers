@@ -8,13 +8,16 @@ export function instantiate_question(question: object) {
     if (!("checkboxes" in question)) {
         question["checkboxes"] = []
     }
+    if (!("checkbox_type" in question)) {
+        question["checkbox_type"] = "checkbox"
+    }
     if (question["type"].startsWith("text")) {
         if (question["checkboxes"].length != 0) {
             output += (`<br>`)
         }
         question["checkboxes"].forEach((checkbox, checkbox_i) => {
             output += (`
-                <input type="checkbox" id="q_${question["id"]}_${checkbox_i}" name="q_${question["id"]}_${checkbox_i}" value="${checkbox}">
+                <input type="${question['checkbox_type']}" id="q_${question["id"]}_${checkbox_i}" name="q_${question["id"]}" value="${checkbox}">
                 <label for="q_${question["id"]}_${checkbox_i}">${checkbox}</label>
             `)
         })
