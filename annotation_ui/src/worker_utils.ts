@@ -8,7 +8,7 @@ export function instantiate_question(question: object) {
     if (!("checkboxes" in question)) {
         question["checkboxes"] = []
     }
-    if (question["type"] == "text") {
+    if (question["type"].startsWith("text")) {
         if (question["checkboxes"].length != 0) {
             output += (`<br>`)
         }
@@ -22,9 +22,11 @@ export function instantiate_question(question: object) {
             output += (`<br>`)
         }
 
-        output += `<textarea class='performance_question_value' placeholder='Please provide a detailed answer'></textarea>`
-    } else if (question["type"] == "text_small") {
-        output += `<textarea class='performance_question_small_value'></textarea>`
+        if (question["type"] == "text") {
+            output += `<textarea class='performance_question_value' placeholder='Please provide a detailed answer'></textarea>`
+        } else if (question["type"] == "text_small") {
+            output += `<textarea class='performance_question_small_value'></textarea>`
+        }
     } else if (question["type"] == "number") {
         output += `<input type="number" min="15" max="100">`
     } else if (question["type"] == "choices") {

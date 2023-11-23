@@ -2,18 +2,5 @@
 {"also_control": false, "id": "content", "type": "likert", "question": "How would you rate the <b>content</b> of the questions you have just read?", "labels": ["Very bad", "Very good"]}
 {"also_control": false, "id": "relevance", "type": "likert", "question": "How would you rate the <b>relevance</b> of the questions you have just read?", "labels": ["Very bad", "Very good"]}
 {"also_control": false, "id": "frequency", "type": "likert", "question": "How would you rate the <b>frequency</b> of the questions you have just read?", "labels": ["Very bad", "Very good"]}
-{"also_control": false, "id": "type", "type": "text", "question": "Which type of questions do you think is the most help for your reading task?", "checkboxes": ["Yes–no Questions e.g. Is sole proprietorship a form business organization in the US?", "Alternative Question e.g. What are the best business organization form, sole propretorship, partnership, or corporation?", "Open question with an answer in the article", "Open question without an answer in the article", "Others (please specify)"]}
-{"also_control": false, "id": "where_appear", "type": "text", "question": "In which location would you prefer the questions to appear?", "checkboxes": [
-    "Right before the information",
-    "Within the information (middle)",
-    "Right after the information",
-    "At the beginning of the <b>paragraph</b> where the information resides",
-    "At the end of the <b>paragraph</b> where the information resides",
-    "At the end of the preceding <b>paragraph</b> where the information resides",
-    "At the beginning of the <b>chapter</b> where the information resides",
-    "At the end of the <b>chapter</b> where the information resides",
-    "At the end of the preceding <b>chapter</b> where the information resides",
-    "Other (please specify)"
-]}
-
-
+{"also_control": false, "id": "type", "type": "text", "question": "Which type of questions do you think is the most help for your reading task?", "checkboxes": ["Yes–no Questions e.g. Is sole proprietorship a form business organization in the US?<br>", "Alternative Question e.g. What are the best business organization form, sole propretorship, partnership, or corporation?<br>", "Open question with an answer in the article<br>", "Open question without an answer in the article<br>", "Others (please specify)<br>"]}
+{"also_control": false, "id": "where_appear", "type": "text", "question": "In which location would you prefer the questions to appear?", "checkboxes": [    "Right before the information<br>",     "Within the information (middle)<br>",     "Right after the information<br>",    "At the beginning of the <b>paragraph</b> where the information resides<br>",    "At the end of the <b>paragraph</b> where the information resides<br>",    "At the end of the preceding <b>paragraph</b> where the information resides<br>",    "At the beginning of the <b>chapter</b> where the information resides<br>",    "At the end of the <b>chapter</b> where the information resides<br>",    "At the end of the preceding <b>chapter</b> where the information resides<br>",    "Other (please specify)"]}
