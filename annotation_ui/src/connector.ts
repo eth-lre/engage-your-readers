@@ -18,10 +18,18 @@ export async function load_data(): Promise<any> {
     return result
 }
 
-export async function log_data(data): Promise<any> {
-    if (globalThis.prolific_pid != undefined) {
-        data["prolific_pid"] = globalThis.prolific_pid
+export async function log_data(): Promise<any> {
+    let data = {
+        "phase": globalThis.phase -1,
+        "phase_start": globalThis.phase_start,
+        "uid": globalThis.uid,
+        "prolific_pid": globalThis.prolific_pid,
+        "aid": globalThis.data_now["id"],
+        ...globalThis.responses,
+        ...globalThis.responses_system,
     }
+
+    console.log(data)
 
     let result = await $.ajax(
         SERVER_LOG_ROOT + "log",
@@ -29,7 +37,6 @@ export async function log_data(data): Promise<any> {
             data: JSON.stringify({
                 project: "reading-comprehension-help",
                 uid: globalThis.uid,
-                prolific_pid: globalThis.prolific_pid,
                 payload: JSON.stringify(data),
             }),
             type: 'POST',

@@ -10,8 +10,12 @@ let instruction_area_top = $("#instruction_area_top")
 
 export function setup_progression() {
     function drive_setup() {
-        // TODO: send previous data?
+        if (globalThis.phase != 0 && globalThis.phaseOverride != globalThis.phase) {
+            log_data()
+        }
+
         globalThis.responses = {}
+        globalThis.phase_start = new Date().getTime()
 
         // preemptively lock
         globalThis.expected_responses = 99999

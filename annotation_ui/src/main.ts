@@ -10,6 +10,7 @@ const urlParams = new URLSearchParams(window.location.search);
 globalThis.uid = urlParams.get('uid');
 // take phase from GET if available else use 0 as default
 globalThis.phase = parseInt(urlParams.get("phase")) || 0;
+globalThis.phaseOverride = parseInt(urlParams.get("phase")) || -1;
 
 
 function prolific_rewrite_uid(uid) {
@@ -22,7 +23,6 @@ function prolific_rewrite_uid(uid) {
     let slot = slots[Math.floor(Math.random() * slots.length)];
 
     globalThis.prolific_pid = urlParams.get('prolific_pid');
-    console.log(globalThis.prolific_pid)
 
     return `prolific_pilot_1/s${slot}`
 }
@@ -30,7 +30,7 @@ function prolific_rewrite_uid(uid) {
 async function get_uid_and_data() {
     // set to "demo" uid if in devmode and uid doesn't exist
     if (DEVMODE && globalThis.uid == null) {
-        document.location.href = document.location.href += "?uid=demo";
+        document.location.href = document.location.href += "?uid=demo_authentic";
     }
 
     // repeat until we're able to load the data

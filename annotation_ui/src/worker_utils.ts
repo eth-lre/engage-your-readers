@@ -98,6 +98,5 @@ export function setup_input_listeners() {
 
 export function check_button_lock() {
     let answers = new Set(Object.entries(globalThis.responses).map((x: [string, unknown]) => x[0].split("#")[0]))
-    console.log(answers.size, globalThis.expected_responses)
     $("#button_next").prop("disabled", answers.size < globalThis.expected_responses);
 }
