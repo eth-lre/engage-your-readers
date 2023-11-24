@@ -1,7 +1,7 @@
 import { log_data, get_json, get_html } from "./connector";
 import { DEVMODE } from "./globals";
 import { range, timer } from "./utils";
-import { instantiate_question } from "./worker_utils";
+import { check_button_lock, instantiate_question, setup_input_listeners } from "./worker_utils";
 
 let main_text_area = $("#main_text_area")
 let instruction_area_bot = $("#instruction_area_bot")
@@ -10,32 +10,59 @@ let instruction_area_top = $("#instruction_area_top")
 
 export function setup_progression() {
     function drive_setup() {
+        // TODO: send previous data?
+        globalThis.responses = {}
+
+        // preemptively lock
+        globalThis.expected_responses = 99999
+        check_button_lock()
+
         switch (globalThis.phase) {
-            case 0: setup_intro_demographics(); break;
-            case 1: setup_intro_information(); break;
-            case 2: setup_main_text(null); break;
-            case 3: setup_performance_questions(); break;
-            case 4: setup_exit_questions(); break;
-            case 5: 
-                if(globalThis.user_control) {
+            case 0:
+                setup_intro_demographics();
+                break;
+            case 1:
+                setup_intro_information();
+                break;
+            case 2:
+                setup_main_text(null);
+                break;
+            case 3:
+                setup_performance_questions();
+                break;
+            case 4:
+                if (globalThis.user_control) {
                     // skip to the next one
                     globalThis.phase = 8;
                     drive_setup()
                     return
                 }
+                setup_exit_questions();
+                break;
+            case 5:
                 setup_main_text(["Not helpful", "Helpful"]);
                 break;
-            case 6: setup_main_text(["Distracting", "Not distracting"]); break;
-            case 7: setup_main_text(["Irrelevant", "Relevant"]); break;
-            case 8: load_thankyou(); break;
+            case 6:
+                setup_main_text(["Distracting", "Not distracting"]);
+                break;
+            case 7:
+                setup_main_text(["Irrelevant", "Relevant"]);
+                break;
+            case 8:
+                load_thankyou();
+                break;
         }
     }
-    $("#but_next").on("click", () => {
+    $("#button_next").on("click", () => {
         globalThis.phase += 1;
         drive_setup()
     })
+
     // fire at the beginning
     drive_setup()
+
+    // setup periodic check for unlocks
+    setInterval(check_button_lock, 1000)
 }
 
 
@@ -47,15 +74,18 @@ async function setup_intro_demographics() {
     main_text_area.html("")
 
     let questions = await get_json("questions_intro.jsonl")
+    globalThis.expected_responses = questions.length
 
     questions.forEach((question) => {
         main_text_area.append(`${instantiate_question(question)}<br><br>`)
     })
+    setup_input_listeners()
 }
 
 async function setup_intro_information() {
     instruction_area_top.hide()
     main_text_area.html(await get_html("instructions_2.html"))
+    globalThis.expected_responses = 0
 }
 
 async function setup_main_text(rate_questions: [string, string] | null) {
@@ -110,28 +140,44 @@ async function setup_main_text(rate_questions: [string, string] | null) {
     // hack for JS event loop
     await timer(10)
 
-    let paragraph_offsets = $(".paragraph_finished_button").map((_, element) => $(element).position().top).toArray()
-    $(".paragraph_finished_button").each((element_i, element) => {
-        if (element_i != paragraph_offsets.length - 1) {
-            // make height span two paragraphs to cover question boxes
-            frame_obj.append(`<div
-                class="paragraph_blurbox" id="paragraph_blurbox_${element_i}"
-                style="height: ${paragraph_offsets[element_i + 2] - paragraph_offsets[element_i]}px; top: ${paragraph_offsets[element_i] + 30}px; z-index: ${200-element_i};"
-            ></div>`)
-        }
-        $(element).on("click", () => {
-            element.remove()
-            $(`#paragraph_blurbox_${element_i}`).remove()
+    if (!rate_questions) {
+        let paragraph_offsets = $(".paragraph_finished_button").map((_, element) => $(element).position().top).toArray()
+        $(".paragraph_finished_button").each((element_i, element) => {
+            if (element_i != paragraph_offsets.length - 1) {
+                // make height span two paragraphs to cover question boxes
+                let target_height = paragraph_offsets[element_i + 2] - paragraph_offsets[element_i];
+                if (element_i + 2 >= paragraph_offsets.length) {
+                    target_height = paragraph_offsets[element_i + 1] - paragraph_offsets[element_i]
+                }
+                frame_obj.append(`<div
+                    class="paragraph_blurbox" id="paragraph_blurbox_${element_i}"
+                    style="height: ${target_height}px; top: ${paragraph_offsets[element_i] + 30}px; z-index: ${200 - element_i};"
+                ></div>`)
+            }
+            $(element).on("click", () => {
+                globalThis.responses[`finish_reading_${element_i}`] = new Date().getTime();
+                element.remove()
+                $(`#paragraph_blurbox_${element_i}`).remove()
+            })
         })
-    })
+        // number of paragraphs
+        globalThis.expected_responses = paragraph_offsets.length;
+    } else {
+        globalThis.expected_responses = globalThis.data_now["questions_intext"].length
+    }
 
+    // add extra space
     globalThis.data_now["questions_intext"].forEach(async (element, element_i) => {
-        let paragraph_i = frame_obj.html().split(`id="question_${element_i}"`)[0].split("paragraph_finished_button").length-1
         let question_span = $(`#question_${element_i}`)
         question_span.append("&nbsp;")
-        // hack for JS event loop
-        await timer(10)
+    })
 
+    // hack for JS event loop
+    await timer(10)
+
+    globalThis.data_now["questions_intext"].forEach(async (element, element_i) => {
+        let paragraph_i = frame_obj.html().split(`id="question_${element_i}"`)[0].split("paragraph_finished_button").length - 1
+        let question_span = $(`#question_${element_i}`)
         let offset_x = question_span.position().left
         let offset_y = question_span.position().top
 
@@ -157,12 +203,14 @@ async function setup_main_text(rate_questions: [string, string] | null) {
         question_obj.append(`
             <hr class="arrow" style="width: 0px; height: 8px; position: absolute; left: ${offset_x + 1}px; top: ${offset_y - 8}px;">
             <hr class="line" style="width: ${1000 - offset_x}px; position: absolute; left: ${offset_x + 1}px; top: ${offset_y - 10}px;">
-            <div class="question_box" style="position: absolute; top: ${offset_y - 3}px; z-index: ${200-paragraph_i}">
-                ${element["question"]}
+            <div class="question_box" style="position: absolute; top: ${offset_y - 3}px; z-index: ${200 - paragraph_i}">
+                <span class="question_box_text">${element["question"]}</span>
                 ${question_rate_section}
             </div>
         `)
     })
+
+    setup_input_listeners()
 }
 
 async function setup_performance_questions() {
@@ -177,16 +225,19 @@ async function setup_performance_questions() {
     main_text_area.html("")
 
     let questions = globalThis.data_now["questions_performance"]
-    questions.forEach((question) => {
+    globalThis.expected_responses = questions.length
+
+    questions.forEach((question, question_i) => {
         main_text_area.append(`
             <div class="performance_question_text">${question["question"]}</div>
             
         `)
         main_text_area.append(`
-            <textarea class='performance_question_value' placeholder='Please provide a detailed answer'></textarea>
+            <textarea class='performance_question_value' qid="${question_i}" placeholder='Please provide a detailed answer'></textarea>
             <br><br>
         `)
     })
+    setup_input_listeners()
 }
 
 async function setup_exit_questions() {
@@ -201,14 +252,16 @@ async function setup_exit_questions() {
     main_text_area.html("")
 
     let questions = await get_json("questions_exit.jsonl")
+    globalThis.expected_responses = questions.length
 
     questions.forEach((question) => {
         // skip this question
-        if(globalThis.user_control && !question["also_control"]) {
+        if (globalThis.user_control && !question["also_control"]) {
             return
         }
         main_text_area.append(`${instantiate_question(question)}<br><br>`)
     })
+    setup_input_listeners()
 }
 
 async function load_thankyou() {

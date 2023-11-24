@@ -4,13 +4,13 @@ import { load_data } from './connector'
 import { setup_progression } from "./worker_website"
 import { range } from "./utils";
 
-globalThis.phase = 0;
 globalThis.data = null
 
 const urlParams = new URLSearchParams(window.location.search);
 globalThis.uid = urlParams.get('uid');
-// take data_i from GET if available else use 0 as default
-globalThis.data_i = parseInt(urlParams.get("data_i")) - 1 || 0;
+// take phase from GET if available else use 0 as default
+globalThis.phase = parseInt(urlParams.get("phase")) || 0;
+
 
 function prolific_rewrite_uid(uid) {
     if (uid != "prolific_pilot_1") {
@@ -51,7 +51,7 @@ async function get_uid_and_data() {
 
         await load_data().then((data: any) => {
             globalThis.data = data
-            globalThis.data_now = globalThis.data[globalThis.data_i];
+            globalThis.data_now = globalThis.data[0];
             setup_progression()
         }).catch((reason: any) => {
             console.error(reason)
