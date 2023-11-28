@@ -128,8 +128,8 @@ input[type="range"].performance_question_value {
 
 
 .question_question_likert_parent input[type="radio"] {
-    margin-left: -1px;
-    margin-right: -1px;
+    margin-left: 7.9px;
+    margin-right: 7.8px;
 }
 
 .question_question_likert_parent {
@@ -146,7 +146,7 @@ input[type="range"].performance_question_value {
 }
 
 .question_question_likert_labels {
-    word-spacing: 4px;
+    word-spacing: 22px;
     margin-top: -5px;
 }
 

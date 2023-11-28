@@ -15,22 +15,25 @@ export function instantiate_question(question: object) {
     // insert input fields
     if (question["type"].startsWith("text")) {
         if (question["checkboxes"].length != 0) {
-            output += (`<br>`)
+            output += (`<br style="display: block; content: ''; margin-top: -1px;">`)
         }
         question["checkboxes"].forEach((checkbox, checkbox_i) => {
             output += (`
                 <input type="${question['checkbox_type']}" id="q_${question["id"]}_${checkbox_i}" name="${question["id"]}" value="${checkbox}">
-                <label for="q_${question["id"]}_${checkbox_i}">${checkbox}</label>
+                <label for="q_${question["id"]}_${checkbox_i}" style="margin-right: 10px;">${checkbox}</label>
             `)
         })
         if (question["checkboxes"].length != 0) {
-            output += (`<br>`)
+            output += (`<br style="display: block; content: ''; margin-top: -1px;">`)
         }
 
         if (question["type"] == "text") {
             output += `<textarea class='performance_question_value' qid="${question["id"]}" placeholder='Please provide a detailed answer'></textarea>`
         } else if (question["type"] == "text_small") {
             output += `<textarea class='performance_question_small_value' qid="${question["id"]}"></textarea>`
+        } else if (question["type"] == "text_none") {
+            // do nothing
+            output += (`<br style="display: block; content: ''; margin-top: -11px;">`)
         }
     } else if (question["type"] == "choices") {
         let options = question["choices"].map((choice) => `<option value="${choice}">${choice}</option>`)

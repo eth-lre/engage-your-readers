@@ -23,10 +23,10 @@ export function setup_progression() {
 
         switch (globalThis.phase) {
             case 0:
-                setup_intro_demographics();
+                setup_intro_information();
                 break;
             case 1:
-                setup_intro_information();
+                setup_intro_demographics();
                 break;
             case 2:
                 setup_main_text(null);
@@ -88,7 +88,7 @@ async function setup_intro_demographics() {
 
 async function setup_intro_information() {
     instruction_area_top.hide()
-    main_text_area.html(await get_html("instructions_2.html"))
+    main_text_area.html(await get_html("instructions.html"))
     globalThis.expected_responses = 0
 }
 
