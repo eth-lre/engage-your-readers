@@ -177,7 +177,7 @@ async function setup_main_text(rate_questions: [string, string] | null) {
     })
 
     // hack for JS event loop
-    await timer(10)
+    await timer(30)
 
     globalThis.data_now["questions_intext"].forEach(async (element, element_i) => {
         let paragraph_i = frame_obj.html().split(`id="question_${element_i}"`)[0].split("paragraph_finished_button").length - 1

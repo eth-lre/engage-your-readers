@@ -216,7 +216,9 @@ input[type="button"]:disabled {
 }
 
 .paragraph_finished_button {
-    font-size: small !important;
-    padding: 0px 3px 0px 3px !important;
-    margin-top: -2px;
+    font-size: 15pt;
+    padding: 5px;
+    margin-top: -5px;
+    position: relative;
+    top: 10px;
 }
