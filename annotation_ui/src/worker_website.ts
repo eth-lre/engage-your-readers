@@ -106,9 +106,9 @@ async function setup_main_text(rate_questions: [string, string] | null) {
     } else {
         instruction_area_top.html(`
             <ul>
-                <li>Please read the assigned article carefully. You have <b><span id="stopwatch">20</span> minutes</b> left.</li>
+                <li>Please read the assigned article carefully. You have <span id="stopwatch">20 minutes ⏱️</span> left.</li>
                 <li>Please <b>click the finished button</b> at the bottom of it to reveal the next paragraph when you finish reading a paragraph.</li>
-                <li>A series of questions is shown next to the article. When you encounter one, please make sure to read and comprehend it before moving on.</li>
+                <li>Questions are shown next to the article. When you encounter one, please make sure to read and comprehend it before moving on.</li>
                 <li>Think about the questions and keep them in mind as you proceed with reading.</li>
             </ul>
         `)
@@ -124,7 +124,7 @@ async function setup_main_text(rate_questions: [string, string] | null) {
                 minutes = 0
                 clearInterval(stopwatchTimer);
             }
-            $("#stopwatch").text(`${minutes}`)
+            $("#stopwatch").text(`${minutes} minutes ⏱️`)
         }, 1000 * 60);
     }
 
@@ -160,7 +160,7 @@ async function setup_main_text(rate_questions: [string, string] | null) {
             }
             $(element).on("click", () => {
                 globalThis.responses[`finish_reading_${element_i}`] = new Date().getTime();
-                element.remove()
+                $(element).css("visibility", "hidden");
                 $(`#paragraph_blurbox_${element_i}`).remove()
             })
         })

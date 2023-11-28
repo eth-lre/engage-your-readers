@@ -216,9 +216,16 @@ input[type="button"]:disabled {
 }
 
 .paragraph_finished_button {
-    font-size: 15pt;
-    padding: 5px;
-    margin-top: -5px;
-    position: relative;
-    top: 10px;
+    font-size: 11pt !important;
+    padding: 2px 8px 2px 8px !important;
+}
+
+#stopwatch {
+    background-color: #b7b9bd;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+#stopwatch:hover {
+    cursor: progress;
 }
