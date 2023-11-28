@@ -59,7 +59,7 @@ export function setup_input_listeners() {
     $("textarea").each((element_i, element) => {
         let object = $(element);
         object.on("input", () => {
-            globalThis.responses[object.attr("qid")] = object.val()
+            globalThis.responses[`text_${object.attr("qid")}`] = object.val()
         })
     });
 
@@ -94,7 +94,7 @@ export function setup_input_listeners() {
     $("select").each((element_i, element) => {
         let object = $(element);
         object.on("input", () => {
-            globalThis.responses[object.attr("qid")] = object.val()
+            globalThis.responses[`select_${object.attr("qid")}`] = object.val()
         })
     });
 }

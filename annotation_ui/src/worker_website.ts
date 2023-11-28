@@ -131,7 +131,7 @@ async function setup_main_text(rate_questions: [string, string] | null) {
     let article = globalThis.data_now["article"]
     // add "finished" button
     if (!rate_questions) {
-        article = article.split("</p>").join(`  <input class="paragraph_finished_button" type='button' value="Finished"></p>`)
+        article = article.split("</p>").join(`  <input class="paragraph_finished_button" type='button' value="Finished 🔓"></p>`)
     }
 
     let frame_obj = $(`<div id="article_frame">${article}</div>`)
