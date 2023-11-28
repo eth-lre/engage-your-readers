@@ -41,6 +41,7 @@
     width: calc(100% - 30px);
     margin-left: -10px;
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     position: absolute;
 }
 
