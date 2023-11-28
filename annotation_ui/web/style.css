@@ -123,9 +123,13 @@ input[type="range"].performance_question_value {
 }
 
 .performance_question_likert_labels {
-    word-spacing: 12px;
+    word-spacing: 25px;
 }
 
+.performance_question_likert_parent input[type="radio"] {
+    margin-left: 10.5px;
+    margin-right: 10.5px;
+}
 
 .question_question_likert_parent input[type="radio"] {
     margin-left: 7.9px;
