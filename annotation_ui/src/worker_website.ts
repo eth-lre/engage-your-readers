@@ -88,7 +88,12 @@ async function setup_intro_demographics() {
 
 async function setup_intro_information() {
     instruction_area_top.hide()
-    main_text_area.html(await get_html("instructions.html"))
+    console.log(globalThis.user_control)
+    if (globalThis.user_control) {
+        main_text_area.html(await get_html("instructions_control.html"))
+    } else {
+        main_text_area.html(await get_html("instructions.html"))
+    }
     globalThis.expected_responses = 0
 }
 

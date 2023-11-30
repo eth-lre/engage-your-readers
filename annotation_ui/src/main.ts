@@ -52,6 +52,7 @@ async function get_uid_and_data() {
         await load_data().then((data: any) => {
             globalThis.data = data
             globalThis.data_now = globalThis.data[0];
+            globalThis.user_control = globalThis.data_now["user_group"] == "control"
             setup_progression()
         }).catch((reason: any) => {
             console.error(reason)
@@ -60,7 +61,6 @@ async function get_uid_and_data() {
         });
     }
 
-    globalThis.user_control = globalThis.data_now["user_group"] == "control"
 }
 
 get_uid_and_data()
