@@ -285,6 +285,10 @@ async function load_thankyou() {
     instruction_area_top.hide()
     instruction_area_bot.hide()
 
+    // log last phase
+    globalThis.phase += 1;
+    log_data()
+    
     main_text_area.html("Please wait 3s for data synchronization to finish.")
     await timer(1000)
     main_text_area.html("Please wait 2s for data synchronization to finish.")
