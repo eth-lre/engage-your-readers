@@ -210,7 +210,7 @@ async function setup_main_text(rate_questions: [string, string] | null) {
         }
 
         let offset_y_manual = 0
-        if (element_i < globalThis.data_now["questions_intext"].length-1) {
+        if (rate_questions && element_i < globalThis.data_now["questions_intext"].length-1) {
             let offset_y_next = $(`#question_${element_i+1}`).position().top
             if (offset_y + 200 >= offset_y_next) {
                 offset_y_manual = -40
