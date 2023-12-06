@@ -233,3 +233,10 @@ input[type="button"]:disabled {
 #stopwatch:hover {
     cursor: progress;
 }
+
+.question_img {
+    width: 600px;
+    /* hack because we use it only in one case */
+    margin-left: 200px;
+    margin-bottom: -150px;
+}

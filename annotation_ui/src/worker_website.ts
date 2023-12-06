@@ -35,15 +35,15 @@ export function setup_progression() {
                 setup_performance_questions();
                 break;
             case 4:
+                setup_exit_questions();
+                break;
+            case 5:
                 if (globalThis.user_control) {
                     // skip to the next one
                     globalThis.phase = 8;
                     drive_setup()
                     return
                 }
-                setup_exit_questions();
-                break;
-            case 5:
                 setup_main_text(["Not helpful", "Helpful"]);
                 break;
             case 6:

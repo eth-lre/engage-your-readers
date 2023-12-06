@@ -11,7 +11,9 @@ export function instantiate_question(question: object) {
     if (!("checkbox_type" in question)) {
         question["checkbox_type"] = "checkbox"
     }
-
+    if ("img" in question) {
+        output += `<img class="question_img" src=${question["img"]}>`
+    }
     // insert input fields
     if (question["type"].startsWith("text")) {
         if (question["checkboxes"].length != 0) {
@@ -42,7 +44,7 @@ export function instantiate_question(question: object) {
         let joined_labels = range(1, 5).map((x) => `<label for="likert_${question["id"]}_${x}" value="${x}">${x}</label>`).join("\n")
         let joined_inputs = range(1, 5).map((x) => `<input type="radio" name="likert_${question["id"]}" id="likert_${question["id"]}_${x}" value="${x}" />`).join("\n")
 
-        output += (`
+        output += `
             <div class='performance_question_likert_parent'>
                 <div class="performance_question_likert_labels">${joined_labels}</div>
         
@@ -50,8 +52,10 @@ export function instantiate_question(question: object) {
                 ${joined_inputs}
                 <span class="performance_question_likert_label" style="text-align: left">${question["labels"][1]}</span>
             </div>
-        `)
+        `
     }
+
+
     return output
 }
 
