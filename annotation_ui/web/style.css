@@ -236,7 +236,8 @@ input[type="button"]:disabled {
 
 .question_img {
     width: 600px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     /* hack because we use it only in one case */
     margin-left: 200px;
-    margin-bottom: -150px;
 }
