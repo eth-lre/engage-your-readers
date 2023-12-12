@@ -269,7 +269,7 @@ async function setup_exit_questions() {
     main_text_area.html("")
 
     let questions = await get_json("questions_exit.jsonl")
-    globalThis.expected_responses = questions.length
+    globalThis.expected_responses = questions.filter((question) => globalThis.user_control || question["also_control"]).length
 
     questions.forEach((question) => {
         // skip this question
