@@ -7,6 +7,8 @@ data_eval
 node_modules
 prolific_pilot_1
 .DS_Store
+data.jsonl
+01-get_data.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
