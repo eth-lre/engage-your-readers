@@ -11,11 +11,22 @@ def factory_extract_likert(phase, key):
         return float(userdata[phase][key])
     return func
 
+def factory_get_question_likert(phase):
+    def func(userdata):
+        return np.average([
+            float(userdata[phase][key])
+            for key in userdata[phase] if key.endswith("#radio")
+        ])
+    return func
+
 EXTRACTORS = {
     "satisfaction": factory_extract_likert(4, "likert_satisfaction#radio"),
     "content": factory_extract_likert(4, "likert_content#radio"),
     "relevance": factory_extract_likert(4, "likert_relevance#radio"),
     "frequency": factory_extract_likert(4, "likert_frequency#radio"),
+    "question_helpful": factory_get_question_likert(5),
+    "question_distracting": factory_get_question_likert(6),
+    "question_relevant": factory_get_question_likert(7),
 }
 
 def uid_to_group(uid):
