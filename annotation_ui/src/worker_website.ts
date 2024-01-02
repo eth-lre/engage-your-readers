@@ -276,14 +276,23 @@ async function setup_exit_questions() {
     let questions = await get_json("questions_exit.jsonl")
     globalThis.expected_responses = questions.filter((question) => !globalThis.user_control || question["also_control"]).length
 
+    let showed_questions = 0
     questions.forEach((question) => {
         // skip this question
         if (globalThis.user_control && !question["also_control"]) {
             return
         }
+        showed_questions += 1
         main_text_area.append(`${instantiate_question(question)}<br><br>`)
     })
     setup_input_listeners()
+
+    // continue to the next screen if nothing to show
+    if (showed_questions == 0) {
+        $("#button_next").trigger("click")
+        // hack for JS event loop
+        await timer(10)
+    }
 }
 
 async function load_thankyou() {
