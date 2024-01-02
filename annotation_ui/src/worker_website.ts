@@ -50,7 +50,7 @@ export function setup_progression() {
                 setup_main_text(["Distracting", "Not distracting"], "Is the question is raised at an appropriate position and not distracting?");
                 break;
             case 7:
-                setup_main_text(["Not imp.", "Important"], "Is the question significant to the topic of the paragraph?");
+                setup_main_text(["Not imp.", "Important"], "Is the question important to the central topic of the article?");
                 break;
             case 8:
                 load_thankyou();
@@ -112,9 +112,9 @@ async function setup_main_text(rate_questions: [string, string] | null, rate_que
     } else {
         instruction_area_top.html(`
             <ul>
-                <li>Please read the assigned article carefully. You have <span id="stopwatch">20 minutes ⏱️</span> left.</li>
-                <li>Please <b>click the finished button</b> at the bottom of it to reveal the next paragraph when you finish reading a paragraph.</li>
-                <li>Questions are shown next to the article. When you encounter one, please make sure to read and comprehend it before moving on.</li>
+                <li>Please read the assigned article. You have <span id="stopwatch">20 minutes ⏱️</span> left.</li>
+                <li><b>Click the finished button</b> at the bottom of each paragraph to continue.</li>
+                <li>Questions are shown next to the article. When you encounter one, make sure to read and understand it before moving on.</li>
                 <li>Think about the questions and keep them in mind as you proceed with reading.</li>
             </ul>
         `)
@@ -137,7 +137,10 @@ async function setup_main_text(rate_questions: [string, string] | null, rate_que
     let article = globalThis.data_now["article"]
     // add "finished" button
     if (!rate_questions) {
-        article = article.split("</p>").join(`  <input class="paragraph_finished_button" type='button' value="Finished ✅"></p>`)
+        article = (
+            `<input class="paragraph_finished_button" type='button' value="Start ✅">` +
+            article.split("</p>").join(`  <input class="paragraph_finished_button" type='button' value="Finished ✅"></p>`)
+        )
     }
 
     let frame_obj = $(`<div id="article_frame">${article}</div>`)
@@ -318,8 +321,8 @@ async function load_thankyou() {
 
     let html_text = `Thank you for participating in our study. For any further questions about this project or your data, <a href="mailto:peng.cui@inf.ethz.ch">send us a message</a>.`;
     if (globalThis.uid.startsWith("prolific_pilot_1")) {
-        html_text += `<br>Please click <a href="https://app.prolific.co/submissions/complete?cc=C1FV7L5F">this link</a> to go back to Prolific. `
-        html_text += `Alternatively use this code <em>C1FV7L5F</em>.`
+        html_text += `<br>Please click <a href="https://app.prolific.co/submissions/complete?cc=C693YF4X">this link</a> to go back to Prolific. `
+        html_text += `Alternatively use this code <em>C693YF4X</em>.`
     }
     main_text_area.html(html_text);
 }

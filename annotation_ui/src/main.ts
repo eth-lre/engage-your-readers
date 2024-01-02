@@ -18,13 +18,23 @@ function prolific_rewrite_uid(uid) {
         return uid
     }
 
-    // random queue
-    let slots = range(0, 99).map((x) => String(x).padStart(2, "0"));
-    let slot = slots[Math.floor(Math.random() * slots.length)];
+    let article = urlParams.get("article") || "any"
+    const ALL_ARTICLES = ["classical_chinese_philosophy"]
+    if (article == "any") {
+        article = ALL_ARTICLES[Math.floor(Math.random() * ALL_ARTICLES.length)]
+    }
 
+    let group = urlParams.get("group") || "any"
+    const ALL_GROUPS = ["control", "authentic", "generated"]
+    if (group == "any") {
+        group = ALL_GROUPS[Math.floor(Math.random() * ALL_GROUPS.length)]
+    }
+    
     globalThis.prolific_pid = urlParams.get('prolific_pid');
+    globalThis.session_id = urlParams.get('session_id');
+    globalThis.study_id = urlParams.get('study_id');
 
-    return `prolific_pilot_1/s${slot}`
+    return `${article}_${group}`
 }
 
 async function get_uid_and_data() {
@@ -43,11 +53,7 @@ async function get_uid_and_data() {
             globalThis.uid = UID_maybe!;
         }
 
-        let old_uid = globalThis.uid
         globalThis.uid = prolific_rewrite_uid(globalThis.uid);
-        if (old_uid != globalThis.uid) {
-            document.location.href = document.location.href.replace("?uid=" + old_uid, "?uid=" + globalThis.uid);
-        }
 
         await load_data().then((data: any) => {
             globalThis.data = data

@@ -24,6 +24,8 @@ export async function log_data(): Promise<any> {
         "phase_start": globalThis.phase_start,
         "uid": globalThis.uid,
         "prolific_pid": globalThis.prolific_pid,
+        "session_id": globalThis.session_id,
+        "study_id": globalThis.study_id,
         "aid": globalThis.data_now["id"],
         ...globalThis.responses,
         ...globalThis.responses_system,
