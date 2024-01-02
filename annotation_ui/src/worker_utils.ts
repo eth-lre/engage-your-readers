@@ -62,8 +62,19 @@ export function instantiate_question(question: object) {
 export function setup_input_listeners() {
     $("textarea").each((element_i, element) => {
         let object = $(element);
+        let is_summary_100 = object.hasClass("performance_question_100_words")
         object.on("input", () => {
-            globalThis.responses[`text_${object.attr("qid")}`] = object.val()
+            let text = object.val() as string
+            if (is_summary_100) {
+                if (text.split(/\s+/).length < 100) {
+                    // replace
+                    globalThis.responses[`text_${object.attr("qid")}`] = null
+                } else {
+                    globalThis.responses[`text_${object.attr("qid")}`] = text
+                }
+            } else {
+                globalThis.responses[`text_${object.attr("qid")}`] = text
+            }
         })
     });
 
@@ -104,6 +115,9 @@ export function setup_input_listeners() {
 }
 
 export function check_button_lock() {
-    let answers = new Set(Object.entries(globalThis.responses).map((x: [string, unknown]) => x[0].split("#")[0]))
+    let answers = new Set(Object.entries(globalThis.responses)
+        .map((x: [string, unknown]) => x[1] != null ? x[0].split("#")[0] : null)
+        .filter((x) => x != null)
+    )
     $("#button_next").prop("disabled", answers.size < globalThis.expected_responses);
 }

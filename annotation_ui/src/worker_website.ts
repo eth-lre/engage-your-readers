@@ -245,12 +245,17 @@ async function setup_performance_questions() {
     globalThis.expected_responses = questions.length
 
     questions.forEach((question, question_i) => {
+        let is_summary_question = question["question"].includes("at least 100 words")
+
         main_text_area.append(`
             <div class="performance_question_text">${question["question"]}</div>
-            
         `)
         main_text_area.append(`
-            <textarea class='performance_question_value' qid="${question_i}" placeholder='Please provide a detailed answer'></textarea>
+            <textarea
+                class='performance_question_value ${is_summary_question ?"performance_question_100_words" : ""}'
+                qid="${question_i}"
+                placeholder='Please provide a detailed answer'
+            ></textarea>
             <br><br>
         `)
     })
