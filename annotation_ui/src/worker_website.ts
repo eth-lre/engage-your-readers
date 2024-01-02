@@ -39,18 +39,18 @@ export function setup_progression() {
                 break;
             case 5:
                 if (globalThis.user_control) {
-                    // skip to the next one
+                    // skip these questions for control group
                     globalThis.phase = 8;
                     drive_setup()
                     return
                 }
-                setup_main_text(["Not helpful", "Helpful"]);
+                setup_main_text(["Irrelevant", "Relevant"], "Is the question is relevant to the context?");
                 break;
             case 6:
-                setup_main_text(["Distracting", "Not distracting"]);
+                setup_main_text(["Distracting", "Not distracting"], "Is the question is raised at an appropriate position and not distracting?");
                 break;
             case 7:
-                setup_main_text(["Irrelevant", "Relevant"]);
+                setup_main_text(["Not imp.", "Important"], "Is the question significant to the topic of the paragraph?");
                 break;
             case 8:
                 load_thankyou();
@@ -97,16 +97,17 @@ async function setup_intro_information() {
     globalThis.expected_responses = 0
 }
 
-async function setup_main_text(rate_questions: [string, string] | null) {
+async function setup_main_text(rate_questions: [string, string] | null, rate_questions_intro?: string) {
     // set instructions
     instruction_area_top.show()
     if (rate_questions) {
         instruction_area_top.html(`
             <ul>
                 <li>Please evaluate each question (1 - very bad to 5 - very good) shown on the right based on your reading experience.</li>
-                <li>You will be asked if the questions are <b>helpful</b>, <b>distracting</b>, and <b>relevant</b>.</li>
+                ${rate_questions_intro? "<li><b>" + rate_questions_intro + "</b></li>" : ""}
             </ul>
         `)
+        // <li>You will be asked if the questions are <b>helpful</b>, <b>distracting</b>, and <b>relevant</b>.</li>
         instruction_text_bot.text("")
     } else {
         instruction_area_top.html(`
@@ -210,8 +211,8 @@ async function setup_main_text(rate_questions: [string, string] | null) {
         }
 
         let offset_y_manual = 0
-        if (rate_questions && element_i < globalThis.data_now["questions_intext"].length-1) {
-            let offset_y_next = $(`#question_${element_i+1}`).position().top
+        if (rate_questions && element_i < globalThis.data_now["questions_intext"].length - 1) {
+            let offset_y_next = $(`#question_${element_i + 1}`).position().top
             if (offset_y + 200 >= offset_y_next) {
                 offset_y_manual = -40
             }
@@ -252,7 +253,7 @@ async function setup_performance_questions() {
         `)
         main_text_area.append(`
             <textarea
-                class='performance_question_value ${is_summary_question ?"performance_question_100_words" : ""}'
+                class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
                 qid="${question_i}"
                 placeholder='Please provide a detailed answer'
             ></textarea>
@@ -302,7 +303,7 @@ async function load_thankyou() {
     // log last phase
     globalThis.phase += 1;
     log_data()
-    
+
     main_text_area.html("Please wait 3s for data synchronization to finish.")
     await timer(1000)
     main_text_area.html("Please wait 2s for data synchronization to finish.")
