@@ -321,7 +321,7 @@ async function load_thankyou() {
 
     let html_text = `Thank you for participating in our study. For any further questions about this project or your data, <a href="mailto:peng.cui@inf.ethz.ch">send us a message</a>.`;
     if (globalThis.uid.startsWith("prolific_pilot_1")) {
-        html_text += `<br>Please click <a href="https://app.prolific.co/submissions/complete?cc=C693YF4X">this link</a> to go back to Prolific. `
+        html_text += `<br>Please click <a href="https://app.prolific.com/submissions/complete?cc=C693YF4X">this link</a> to go back to Prolific. `
         html_text += `Alternatively use this code <em>C693YF4X</em>.`
     }
     main_text_area.html(html_text);
