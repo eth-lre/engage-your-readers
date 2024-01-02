@@ -31,7 +31,7 @@ module.exports = (env, argv) => {
             "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
          },
          compress: true,
-         port: 9000,
+         port: 9001,
       },
       plugins: [
          new webpack.DefinePlugin({

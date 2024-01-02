@@ -246,10 +246,15 @@ async function setup_performance_questions() {
     globalThis.expected_responses = questions.length
 
     questions.forEach((question, question_i) => {
-        let is_summary_question = question["question"].includes("at least 100 words")
+        let is_summary_question = question["question"].includes("(at least 100 words)")
+
+        let question_text = question["question"]
+        if(is_summary_question) {
+            question_text = question_text.replace("(at least 100 words)", "(at least 100 words, currently <span id='summary_word_count'>0</span>)")
+        }
 
         main_text_area.append(`
-            <div class="performance_question_text">${question["question"]}</div>
+            <div class="performance_question_text">${question_text}</div>
         `)
         main_text_area.append(`
             <textarea

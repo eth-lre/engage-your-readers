@@ -66,7 +66,9 @@ export function setup_input_listeners() {
         object.on("input", () => {
             let text = object.val() as string
             if (is_summary_100) {
-                if (text.split(/\s+/).length < 100) {
+                let current_word_count = text.split(/\s+/).length
+                $("#summary_word_count").text(`${current_word_count}`)
+                if (current_word_count < 100) {
                     // replace
                     globalThis.responses[`text_${object.attr("qid")}`] = null
                 } else {
