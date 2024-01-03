@@ -249,11 +249,12 @@ async function setup_performance_questions() {
     globalThis.expected_responses = questions.length
 
     questions.forEach((question, question_i) => {
-        let is_summary_question = question["question"].includes("(at least 100 words)")
+        // agreement with Peng that a summary question has this
+        let is_summary_question = question["question"].includes("summary_word_count")
 
         let question_text = question["question"]
         if(is_summary_question) {
-            question_text = question_text.replace("(at least 100 words)", "(at least 100 words, currently <span id='summary_word_count'>0</span>)")
+            question_text = question_text.replace("summary_word_count", `summary_word_count_q${question_i}`)
         }
 
         main_text_area.append(`

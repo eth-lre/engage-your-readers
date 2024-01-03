@@ -70,7 +70,10 @@ export function setup_input_listeners() {
                 if (text.match(/^\s*$/)) {
                     current_word_count = 0
                 }
-                $("#summary_word_count").text(`${current_word_count}`)
+
+                // word counter is tied to a particular question with qid
+                let qid = object.attr("qid")
+                $(`#summary_word_count_q${qid}`).text(`${current_word_count}`)
                 if (current_word_count < 100) {
                     // replace
                     globalThis.responses[`text_${object.attr("qid")}`] = null
