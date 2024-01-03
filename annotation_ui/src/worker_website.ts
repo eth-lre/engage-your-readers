@@ -47,7 +47,7 @@ export function setup_progression() {
                 setup_main_text(["Irrelevant", "Relevant"], "Is the question is relevant to the context?");
                 break;
             case 6:
-                setup_main_text(["Distracting", "Not distracting"], "Is the question is raised at an appropriate position and not distracting?");
+                setup_main_text(["Distracting", "Not distracting"], "Is the question raised at an appropriate position and not distracting?");
                 break;
             case 7:
                 setup_main_text(["Not imp.", "Important"], "Is the question important to the central topic of the article?");
@@ -321,7 +321,8 @@ async function load_thankyou() {
     await timer(1000)
 
     let html_text = `Thank you for participating in our study. For any further questions about this project or your data, <a href="mailto:peng.cui@inf.ethz.ch">send us a message</a>.`;
-    if (globalThis.uid.startsWith("prolific_pilot_1")) {
+    console.log("PID", globalThis.prolific_pid)
+    if (globalThis.prolific_pid != null) {
         html_text += `<br>Please click <a href="https://app.prolific.com/submissions/complete?cc=C693YF4X">this link</a> to go back to Prolific. `
         html_text += `Alternatively use this code <em>C693YF4X</em>.`
     }
