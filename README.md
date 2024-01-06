@@ -1,6 +1,6 @@
-# Human Reading Comprehension Evaluation
+# Human Reading Comprehension Help
 
-Description TODO
+Description TODO. See a [demo version](https://vilda.net/s/reading-comprehension-help/?uid=demo_paper&phase=2).
 
 WIP project at ETH Zürich: Peng Cui, Xiaoyu Zhang, Vilém Zouhar, Mrinmaya Sachan and others.
 
