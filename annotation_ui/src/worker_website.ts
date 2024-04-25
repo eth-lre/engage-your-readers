@@ -1,4 +1,4 @@
-import { log_data, get_json, get_html } from "./connector";
+import { log_data, get_json, get_html, load_data } from "./connector";
 import { DEVMODE } from "./globals";
 import { range, timer } from "./utils";
 import { check_button_lock, instantiate_question, setup_input_listeners } from "./worker_utils";
@@ -16,6 +16,7 @@ export function setup_progression() {
 
         globalThis.responses = {}
         globalThis.phase_start = new Date().getTime()
+        console.log("order_condition",  globalThis.order_condition)
 
         // preemptively lock
         globalThis.expected_responses = 99999
@@ -26,33 +27,36 @@ export function setup_progression() {
                 setup_intro_information();
                 break;
             case 1:
-                setup_intro_demographics();
+                setup_main_text(0, globalThis.order_condition[0], null);
                 break;
             case 2:
-                setup_main_text(null);
-                break;
-            case 3:
                 setup_performance_questions();
                 break;
-            case 4:
+            case 3:
                 setup_exit_questions();
                 break;
+            case 4:
+                setup_main_text(1, globalThis.order_condition[1], null);
+                break;
             case 5:
-                if (globalThis.user_control) {
-                    // skip these questions for control group
-                    globalThis.phase = 8;
-                    drive_setup()
-                    return
-                }
-                setup_main_text(["Irrelevant", "Relevant"], "Is the question is relevant to the context?");
+                setup_performance_questions();
                 break;
             case 6:
-                setup_main_text(["Distracting", "Not distracting"], "Is the question raised at an appropriate position and not distracting?");
+                setup_exit_questions();
                 break;
             case 7:
-                setup_main_text(["Not imp.", "Important"], "Is the question important to the central topic of the article?");
+                setup_main_text(2, globalThis.order_condition[2], null);
                 break;
             case 8:
+                setup_performance_questions();
+                break;
+            case 9:
+                setup_exit_questions();
+                break;
+            case 10:
+                setup_intro_demographics();
+                break;
+            case 11:
                 load_thankyou();
                 break;
         }
@@ -97,7 +101,7 @@ async function setup_intro_information() {
     globalThis.expected_responses = 0
 }
 
-async function setup_main_text(rate_questions: [string, string] | null, rate_questions_intro?: string) {
+async function setup_main_text(article_id, condition_id, rate_questions: [string, string] | null, rate_questions_intro?: string) {
     // set instructions
     instruction_area_top.show()
     if (rate_questions) {
@@ -133,6 +137,16 @@ async function setup_main_text(rate_questions: [string, string] | null, rate_que
             $("#stopwatch").text(`${minutes} minutes ⏱️`)
         }, 1000 * 60);
     }
+
+    await load_data().then((data: any) => {
+        globalThis.data = data
+        globalThis.data_now = globalThis.data[article_id*3+condition_id];
+        globalThis.user_control = globalThis.data_now["user_group"] == "control"
+    }).catch((reason: any) => {
+        console.error(reason)
+        alert("Invalid UID " + globalThis.uid);
+        globalThis.uid = null;
+    });
 
     let article = globalThis.data_now["article"]
     // add "finished" button

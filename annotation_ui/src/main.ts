@@ -12,6 +12,22 @@ globalThis.uid = urlParams.get('uid');
 globalThis.phase = parseInt(urlParams.get("phase")) || 0;
 globalThis.phaseOverride = parseInt(urlParams.get("phase")) || -1;
 
+function shuffle(array) {
+    let currentIndex = array.length;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    return array
+}
 
 function prolific_rewrite_uid(uid) {
     if (uid != "prolific_pilot_1") {
@@ -54,6 +70,7 @@ async function get_uid_and_data() {
         }
 
         globalThis.uid = prolific_rewrite_uid(globalThis.uid);
+        globalThis.order_condition = shuffle([0, 1, 2])
 
         await load_data().then((data: any) => {
             globalThis.data = data
