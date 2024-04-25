@@ -22,6 +22,9 @@ First you need to start the logger locally:
 ```
 git clone https://github.com/zouharvi/annotation-logger.git
 cd annotation-logger
+# install flask and flask_cors (set up virtual environment first if needed)
+pip3 install flask
+pip3 install flask_cors
 # run it in the background
 nohup python3 main.py &
 ```
@@ -35,7 +38,7 @@ npm install
 # run locally and use local logger, not the live one
 npm run dev
 # go to this url which loads the file `annotation_ui/web/queues/demo_authentic.jsonl`
-xdg-open localhost:9001?uid=demo_authentic
+xdg-open localhost:9001?uid=eeg
 ```
 
 You can go from here by adding new user queues to `annotation_ui/web/queues` and loading them with the `uid=` parameter.
