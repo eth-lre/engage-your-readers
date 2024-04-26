@@ -1,7 +1,7 @@
 import { log_data, get_json, get_html, load_data } from "./connector";
 import { DEVMODE } from "./globals";
 import { range, timer } from "./utils";
-import { check_button_lock, instantiate_question, setup_input_listeners } from "./worker_utils";
+import { check_button_lock, instantiate_question, setup_input_listeners, send_signal_to_trigger } from "./worker_utils";
 
 let main_text_area = $("#main_text_area")
 let instruction_area_bot = $("#instruction_area_bot")
@@ -22,6 +22,7 @@ export function setup_progression() {
         globalThis.expected_responses = 99999
         check_button_lock()
 
+        send_signal_to_trigger("phase "+globalThis.phase)
         switch (globalThis.phase) {
             case 0:
                 setup_intro_information();
@@ -36,7 +37,7 @@ export function setup_progression() {
                 setup_exit_questions();
                 break;
             case 4:
-                setup_main_text(1, globalThis.order_condition[1], null);
+                setup_main_text(0, globalThis.order_condition[1], null);
                 break;
             case 5:
                 setup_performance_questions();
@@ -116,7 +117,7 @@ async function setup_main_text(article_id, condition_id, rate_questions: [string
     } else {
         instruction_area_top.html(`
             <ul>
-                <li>Please read the assigned article. You have <span id="stopwatch">20 minutes ⏱️</span> left.</li>
+                <li>Please read the assigned article. You have <span id="stopwatch">10 minutes ⏱️</span> left.</li>
                 <li><b>Click the finished button</b> at the bottom of each paragraph to continue.</li>
                 <li>Questions are shown next to the article. When you encounter one, make sure to read and understand it before moving on.</li>
                 <li>Think about the questions and keep them in mind as you proceed with reading.</li>
@@ -127,7 +128,7 @@ async function setup_main_text(article_id, condition_id, rate_questions: [string
         `)
 
         await timer(10)
-        var minutes = 20
+        var minutes = 10
         var stopwatchTimer = setInterval(() => {
             minutes -= 1
             if (minutes < 0) {
@@ -182,6 +183,7 @@ async function setup_main_text(article_id, condition_id, rate_questions: [string
                 ></div>`)
             }
             $(element).on("click", () => {
+                send_signal_to_trigger("finish reading paragraph "+element_i)
                 globalThis.responses[`finish_reading_${element_i}`] = new Date().getTime();
                 $(element).css("visibility", "hidden");
                 $(`#paragraph_blurbox_${element_i}`).remove()

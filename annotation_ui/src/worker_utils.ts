@@ -129,3 +129,8 @@ export function check_button_lock() {
     )
     $("#button_next").prop("disabled", answers.size < globalThis.expected_responses);
 }
+
+export function send_signal_to_trigger(event) {
+    //TODO: implement this function
+    console.log("[Send a signal to trigger]", event)
+}
