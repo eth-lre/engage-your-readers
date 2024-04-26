@@ -31,33 +31,33 @@ export function setup_progression() {
                 setup_main_text(0, globalThis.order_condition[0], null);
                 break;
             case 2:
-                setup_performance_questions();
-                break;
-            case 3:
                 setup_exit_questions();
                 break;
-            case 4:
+            // case 3:
+            //     setup_performance_questions();
+            //     break;
+            case 3:
                 setup_main_text(0, globalThis.order_condition[1], null);
                 break;
+            case 4:
+                setup_exit_questions();
+                break;
+            // case 6:
+            //     setup_performance_questions();
+            //     break;
             case 5:
-                setup_performance_questions();
+                setup_main_text(2, globalThis.order_condition[2], null);
                 break;
             case 6:
                 setup_exit_questions();
                 break;
+            // case 9:
+            //     setup_performance_questions();
+            //     break;
             case 7:
-                setup_main_text(2, globalThis.order_condition[2], null);
-                break;
-            case 8:
-                setup_performance_questions();
-                break;
-            case 9:
-                setup_exit_questions();
-                break;
-            case 10:
                 setup_intro_demographics();
                 break;
-            case 11:
+            case 8:
                 load_thankyou();
                 break;
         }

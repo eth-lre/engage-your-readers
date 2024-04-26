@@ -1,3 +1,6 @@
-{"also_control": false, "id": "engaging", "type": "likert", "question": "The questions helped in keeping me <b>engaged</b> with the text.", "labels": ["Stronlgy disagree", "Strongly agree"]}
-{"also_control": false, "id": "understanding", "type": "likert", "question": "The questions improved my <b>understanding</b> of the structure and main ideas of the article.", "labels": ["Strongly disagree", "Strongly agree"]}
-{"also_control": false, "id": "overall", "type": "likert", "question": "<b>Overall</b>, I prefer to have such questions during the reading.  ", "labels": ["Strongly disagree", "Stronlgy agree"]}
+{"also_control": false, "id": "Familiarity", "type": "likert", "question": "How familiary are you with the disciplinary of the article?", "labels": ["Not at all", "Very much"]}
+{"also_control": false, "id": "Mental", "type": "likert", "question": "How mentally demanding was the reading?", "labels": ["Very low", "Very high"]}
+{"also_control": false, "id": "Temporal", "type": "likert", "question": "How hurried or rushed was the pace of the reading?", "labels": ["Very low", "Very high"]}
+{"also_control": false, "id": "Performance", "type": "likert", "question": "How successful were you in accomplishing the reading?", "labels": ["Perfect", "Failure"]}
+{"also_control": false, "id": "Effort", "type": "likert", "question": "How hard did you have to work to accomplish your level of performance?", "labels": ["Very low", "Very high"]}
+{"also_control": false, "id": "Frustration", "type": "likert", "question": "How insecure, discouraged, irritated, stressed, and annoyed wereyou?", "labels": ["Very low", "Very high"]}
