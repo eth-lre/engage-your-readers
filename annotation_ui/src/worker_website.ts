@@ -33,31 +33,31 @@ export function setup_progression() {
             case 2:
                 setup_exit_questions();
                 break;
-            // case 3:
-            //     setup_performance_questions();
-            //     break;
             case 3:
-                setup_main_text(0, globalThis.order_condition[1], null);
+                setup_performance_questions();
                 break;
             case 4:
-                setup_exit_questions();
+                setup_main_text(1, globalThis.order_condition[1], null);
                 break;
-            // case 6:
-            //     setup_performance_questions();
-            //     break;
             case 5:
-                setup_main_text(2, globalThis.order_condition[2], null);
+                setup_exit_questions();
                 break;
             case 6:
-                setup_exit_questions();
+                setup_performance_questions();
                 break;
-            // case 9:
-            //     setup_performance_questions();
-            //     break;
             case 7:
-                setup_intro_demographics();
+                setup_main_text(2, globalThis.order_condition[2], null);
                 break;
             case 8:
+                setup_exit_questions();
+                break;
+            case 9:
+                setup_performance_questions();
+                break;
+            case 10:
+                setup_intro_demographics();
+                break;
+            case 11:
                 load_thankyou();
                 break;
         }
@@ -277,13 +277,21 @@ async function setup_performance_questions() {
             <div class="performance_question_text">${question_text}</div>
         `)
         main_text_area.append(`
-            <textarea
-                class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
-                qid="${question_i}"
-                placeholder='Please provide a detailed answer'
-            ></textarea>
-            <br><br>
+        <textarea
+            class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
+            qid="${question_i}"
+            placeholder='Type anything here to activate the go-to-next-screen button'
+        ></textarea>
+        <br><br>
         `)
+        // main_text_area.append(`
+        //     <textarea
+        //         class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
+        //         qid="${question_i}"
+        //         placeholder='Please provide a detailed answer'
+        //     ></textarea>
+        //     <br><br>
+        // `)
     })
     setup_input_listeners()
 }
