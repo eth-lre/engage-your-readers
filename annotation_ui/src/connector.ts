@@ -18,6 +18,26 @@ export async function load_data(): Promise<any> {
     return result
 }
 
+export async function signal_server(event): Promise<any> {
+    let data = {
+        "event": event,
+    }
+    
+    console.log(data)
+
+    let result = await $.ajax(
+        SERVER_LOG_ROOT + "signal",
+        {
+            data: JSON.stringify({
+                event: event,
+            }),
+            type: 'POST',
+            contentType: 'application/json',
+        }
+    )
+    return result
+}
+
 export async function log_data(): Promise<any> {
     let data = {
         "phase": globalThis.phase -1,

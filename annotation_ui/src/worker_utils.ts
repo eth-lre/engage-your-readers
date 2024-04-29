@@ -1,5 +1,6 @@
 
 import { range } from "./utils";
+import { signal_server } from "./connector";
 
 export function instantiate_question(question: object) {
     let output = `<div class="performance_question_text">${question["question"]}</div>`
@@ -132,5 +133,6 @@ export function check_button_lock() {
 
 export function send_signal_to_trigger(event) {
     //TODO: implement this function
+    signal_server(event)
     console.log("[Send a signal to trigger]", event)
 }
