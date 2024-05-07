@@ -2,7 +2,7 @@
 import { range } from "./utils";
 
 export function instantiate_question(question: object) {
-    let output = `<div class="performance_question_text">${question["question"]}</div>`
+    let output = `<div class="performance_question_text" style="margin-top: 30px">${question["question"]}</div>`
 
     // add stub checkboxes if they don't exist
     if (!("checkboxes" in question)) {
@@ -17,7 +17,7 @@ export function instantiate_question(question: object) {
     // insert input fields
     if (question["type"].startsWith("text")) {
         if (question["checkboxes"].length != 0) {
-            output += (`<br style="display: block; content: ''; margin-top: -1px;">`)
+            output += (`<br style="display: block; content: ''; margin-top: 10px;">`)
         }
         question["checkboxes"].forEach((checkbox, checkbox_i) => {
             output += (`

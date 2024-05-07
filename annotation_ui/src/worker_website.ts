@@ -34,7 +34,7 @@ export function setup_progression() {
                 setup_exit_questions();
                 break;
             case 3:
-                setup_performance_questions();
+                setup_performance_questions(0, globalThis.order_condition[0]);
                 break;
             case 4:
                 setup_main_text(1, globalThis.order_condition[1], null);
@@ -43,7 +43,7 @@ export function setup_progression() {
                 setup_exit_questions();
                 break;
             case 6:
-                setup_performance_questions();
+                setup_performance_questions(1, globalThis.order_condition[1]);
                 break;
             case 7:
                 setup_main_text(2, globalThis.order_condition[2], null);
@@ -52,7 +52,7 @@ export function setup_progression() {
                 setup_exit_questions();
                 break;
             case 9:
-                setup_performance_questions();
+                setup_performance_questions(2, globalThis.order_condition[2]);
                 break;
             case 10:
                 setup_intro_demographics();
@@ -250,7 +250,7 @@ async function setup_main_text(article_id, condition_id, rate_questions: [string
     setup_input_listeners()
 }
 
-async function setup_performance_questions() {
+async function setup_performance_questions(article_id, condition_id) {
     instruction_area_top.html(`
         <ul>
             <li>Now please answer a few questions about the article.</li>
@@ -261,38 +261,49 @@ async function setup_performance_questions() {
     main_text_area.scrollTop(0)
     main_text_area.html("")
 
+    globalThis.data_now = globalThis.data[article_id*3+condition_id];
     let questions = globalThis.data_now["questions_performance"]
     globalThis.expected_responses = questions.length
 
-    questions.forEach((question, question_i) => {
-        // agreement with Peng that a summary question has this
-        let is_summary_question = question["question"].includes("summary_word_count")
-
-        let question_text = question["question"]
-        if(is_summary_question) {
-            question_text = question_text.replace("summary_word_count", `summary_word_count_q${question_i}`)
+    let showed_questions = 0
+    questions.forEach((question) => {
+        // skip this question
+        if (globalThis.user_control && !question["also_control"]) {
+            return
         }
-
-        main_text_area.append(`
-            <div class="performance_question_text">${question_text}</div>
-        `)
-        main_text_area.append(`
-        <textarea
-            class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
-            qid="${question_i}"
-            placeholder='Type anything here to activate the go-to-next-screen button'
-        ></textarea>
-        <br><br>
-        `)
-        // main_text_area.append(`
-        //     <textarea
-        //         class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
-        //         qid="${question_i}"
-        //         placeholder='Please provide a detailed answer'
-        //     ></textarea>
-        //     <br><br>
-        // `)
+        showed_questions += 1
+        main_text_area.append(`${instantiate_question(question)}<br><br>`)
     })
+
+    // questions.forEach((question, question_i) => {
+    //     // agreement with Peng that a summary question has this
+    //     let is_summary_question = question["question"].includes("summary_word_count")
+
+    //     let question_text = question["question"]
+    //     if(is_summary_question) {
+    //         question_text = question_text.replace("summary_word_count", `summary_word_count_q${question_i}`)
+    //     }
+
+    //     main_text_area.append(`
+    //         <div class="performance_question_text">${question_text}</div>
+    //     `)
+    //     main_text_area.append(`
+    //     <textarea
+    //         class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
+    //         qid="${question_i}"
+    //         placeholder='Type anything here to activate the go-to-next-screen button'
+    //     ></textarea>
+    //     <br><br>
+    //     `)
+    //     // main_text_area.append(`
+    //     //     <textarea
+    //     //         class='performance_question_value ${is_summary_question ? "performance_question_100_words" : ""}'
+    //     //         qid="${question_i}"
+    //     //         placeholder='Please provide a detailed answer'
+    //     //     ></textarea>
+    //     //     <br><br>
+    //     // `)
+    // })
     setup_input_listeners()
 }
 
