@@ -22,7 +22,9 @@ export function setup_progression() {
         globalThis.expected_responses = 99999
         check_button_lock()
 
-        send_signal_to_trigger("phase "+globalThis.phase)
+        send_signal_to_trigger({
+            "type": "phase",
+            "num": globalThis.phase})
         switch (globalThis.phase) {
             case 0:
                 setup_intro_information();
@@ -117,8 +119,8 @@ async function setup_main_text(article_id, condition_id, rate_questions: [string
     } else {
         instruction_area_top.html(`
             <ul>
-                <li>Please read the assigned article. You have <span id="stopwatch">10 minutes ⏱️</span> left.</li>
-                <li><b>Click the finished button</b> at the bottom of each paragraph to continue.</li>
+                <li>Please read the assigned article. Try to finish within the remaining <span id="stopwatch">10 minutes ⏱️</span>. This timer only serves as a guideline - the text will remain available after it expires.</li>
+                <li>After each paragraph, please rate the cognitive load you experienced while reading it by clicking one of the three buttons undearneath it.</li>
                 <li>Questions are shown next to the article. When you encounter one, make sure to read and understand it before moving on.</li>
                 <li>Think about the questions and keep them in mind as you proceed with reading.</li>
             </ul>
@@ -153,10 +155,19 @@ async function setup_main_text(article_id, condition_id, rate_questions: [string
     // add "finished" button
     if (!rate_questions) {
         article = (
-            `<input class="paragraph_finished_button" type='button' value="Start ✅">` +
-            article.split("</p>").join(`  <input class="paragraph_finished_button" type='button' value="Finished ✅"></p>`)
-        )
-    }
+            `<div class = "paragraph_finished_button">
+            <input id = 'start' type='button' value="Start ✅">
+            </div>`
+             +
+            article.split("</p>").join(
+                `<div class = "paragraph_finished_button">
+                <input id= 'level1' type='button' value="Low ✅">
+                <input id = 'level2' type='button' value="Medium ✅">
+                <input id = 'level3' type='button' value="High ✅">
+                </div></p>`
+            )
+        )
+    }
 
     let frame_obj = $(`<div id="article_frame">${article}</div>`)
     let question_obj = $('<div id="main_question_panel"></div>')
@@ -182,11 +193,43 @@ async function setup_main_text(article_id, condition_id, rate_questions: [string
                     style="height: ${target_height}px; top: ${paragraph_offsets[element_i] + 30}px; z-index: ${200 - element_i};"
                 ></div>`)
             }
-            $(element).on("click", () => {
-                send_signal_to_trigger("finish reading paragraph "+element_i)
-                globalThis.responses[`finish_reading_${element_i}`] = new Date().getTime();
-                $(element).css("visibility", "hidden");
-                $(`#paragraph_blurbox_${element_i}`).remove()
+            const $inputs = $(element).children('input');
+            $inputs.each(function() {
+                $(this).on("click", function() {
+                    var level;
+                    switch ($(this).attr('id')) {
+                        case 'level1':
+                            // Click logic for level 1
+                            console.log("Clicked on level 1");
+                            level = 1;
+                            break;
+                        case 'level2':
+                            // Click logic for level 2
+                            console.log("Clicked on level 2");
+                            level = 2;
+                            break;
+                        case 'level3':
+                            // Click logic for level 3
+                            console.log("Clicked on level 3");
+                            level = 3;
+                            break;
+                        // Add more cases for additional input IDs if needed
+                        case 'start':
+                            console.log("Starting reading");
+                            level = 0;
+                        default:
+                            console.log("Unknown input ID " + $(this).attr('id'));
+                            break;
+                    }
+                    send_signal_to_trigger({
+                        "type": "paragraph",
+                        "num": element_i,
+                        "level": level
+                    })
+                    globalThis.responses[`finish_reading_${element_i}`] = new Date().getTime();
+                    $(element).css("visibility", "hidden");
+                    $(`#paragraph_blurbox_${element_i}`).remove()
+                })
             })
         })
         // number of paragraphs

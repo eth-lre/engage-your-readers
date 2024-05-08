@@ -19,18 +19,10 @@ export async function load_data(): Promise<any> {
 }
 
 export async function signal_server(event): Promise<any> {
-    let data = {
-        "event": event,
-    }
-    
-    console.log(data)
-
     let result = await $.ajax(
         SERVER_LOG_ROOT + "signal",
         {
-            data: JSON.stringify({
-                event: event,
-            }),
+            data: JSON.stringify(event),
             type: 'POST',
             contentType: 'application/json',
         }

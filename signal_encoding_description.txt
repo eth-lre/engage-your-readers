@@ -1,0 +1,10 @@
+For a given signal sent to trigger with code X:
+
+If X < 100, then it means the user has started phase X (counting from 1)
+
+If X > 100, then it means the user has finished reading paragraph X%100 with cognitive load X/100 (integer division)
+For example, if user finished paragraph 5 with cognitive load 3, signal value is 305.
+If user finished reading paragraph 11 with cognitive load 1, signal value is 111.
+If user finished reading paragraph 10 with cognitive load 2, signal value is 210
+
+If X = 100, then user has pressed 'Start' button
