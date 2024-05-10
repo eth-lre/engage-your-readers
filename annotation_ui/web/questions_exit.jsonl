@@ -1,6 +1,6 @@
 {"also_control": false, "id": "Familiarity", "type": "likert", "question": "How familiary are you with the disciplinary of the article?", "labels": ["Not at all", "Very much"]}
 {"also_control": false, "id": "Mental", "type": "likert", "question": "How mentally demanding was the reading?", "labels": ["Very low", "Very high"]}
 {"also_control": false, "id": "Temporal", "type": "likert", "question": "How hurried or rushed was the pace of the reading?", "labels": ["Very low", "Very high"]}
-{"also_control": false, "id": "Performance", "type": "likert", "question": "How successful were you in accomplishing the reading?", "labels": ["Perfect", "Failure"]}
+{"also_control": false, "id": "Performance", "type": "likert", "question": "How successful were you in accomplishing the reading?", "labels": ["Failure", "Perfect"]}
 {"also_control": false, "id": "Effort", "type": "likert", "question": "How hard did you have to work to accomplish your level of performance?", "labels": ["Very low", "Very high"]}
 {"also_control": false, "id": "Frustration", "type": "likert", "question": "How insecure, discouraged, irritated, stressed, and annoyed wereyou?", "labels": ["Very low", "Very high"]}
