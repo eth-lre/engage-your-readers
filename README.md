@@ -31,7 +31,7 @@ Each example consists of
 ## Experiment
 + Code for model training and evaluation: [src](https://github.com/eth-lre/engage-your-readers/tree/main/src).
 + Usage: [src/main](https://github.com/eth-lre/engage-your-readers/blob/main/src/main.py).
-+ Model ckpt: [finetuned models]().
++ Model ckpt: [finetuned models](https://drive.google.com/file/d/1kxvVZBz5pgwUEM5_E8SGQU5YlPwNgAWQ/view?usp=sharing).
 
 ---
 ## Human Study
